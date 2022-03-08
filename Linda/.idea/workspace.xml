@@ -1,11 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d2af85f6-e176-4e96-a8e0-6153d377ce6c" name="Changes" comment="" />
+    <list default="true" id="d2af85f6-e176-4e96-a8e0-6153d377ce6c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/linda/server/GateKeeper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/linda/server/Manager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/linda/server/RemoteGateKeeper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/search/basic/Code.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/search/basic/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/search/basic/Manager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/search/basic/README" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/search/basic/Searcher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/server/LindaClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/server/LindaClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/server/LindaServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/server/LindaServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/server/RemoteLinda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/server/RemoteLinda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/shm/TupleSpaceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/test/TestClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/test/TestClient.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -26,14 +52,18 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\alex3\Documents\Repositories\SchoolProjects\Linda\src" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.TestClient">
     <configuration name="BasicTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="linda.test.BasicTest1" />
       <module name="Linda" />
@@ -47,8 +77,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="linda.test.TestClient" />
+      <module name="Linda" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="linda.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.TestClient" />
         <item itemvalue="Application.BasicTest1" />
       </list>
     </recent_temporary>
@@ -63,5 +107,16 @@
       <updated>1645554778234</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

@@ -9,11 +9,19 @@ import linda.Tuple;
 import linda.Linda.eventMode;
 import linda.Linda.eventTiming;
 import linda.server.LindaClient;
+import linda.server.LindaServer;
+import linda.server.Manager;
+import linda.server.RemoteCallback;
 
 public class TestClient {
 
 	public static void main(String[] args) throws RemoteException {
-		Linda linda = new LindaClient("rmi://localhost:7778/TestRMI");
+
+		Manager manager = new Manager();
+
+		manager.startUp();
+
+		LindaClient linda = new LindaClient("rmi://localhost:7778/Linda");
 		
 		Tuple motif0 = new Tuple(Integer.class, Character.class);
 		Tuple motif1 = new Tuple(Character.class,Integer.class,Integer.class);

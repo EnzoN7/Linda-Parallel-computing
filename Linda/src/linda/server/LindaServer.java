@@ -25,9 +25,15 @@ public class LindaServer extends UnicastRemoteObject implements RemoteLinda  {
 	private static final long serialVersionUID = 8835789050647334792L;
 	
 	private CentralizedLinda kernel;
+
+	private int serverAdd;
+
+	private Manager manager;
 	
-	public LindaServer() throws RemoteException {
-		kernel = new CentralizedLinda();
+	public LindaServer(int serverAdd, Manager manager) throws RemoteException {
+		this.kernel = new CentralizedLinda();
+		this.serverAdd = serverAdd;
+		this.manager = manager;
 	}
 	
 	public void listen() {
@@ -41,11 +47,27 @@ public class LindaServer extends UnicastRemoteObject implements RemoteLinda  {
 	
 	@Override
 	public Tuple read(Tuple template) throws RemoteException {
+		Tuple result = kernel.read(template);
+		if (result == null) {
+			result = (Tuple) this.manager.redistribute(this.serverAdd, "readNoRedirect", template);
+		}
+		return result;
+	}
+
+	public Tuple readNoRedirect(Tuple template) throws RemoteException {
 		return kernel.read(template);
 	}
 	
 	@Override
 	public Tuple take(Tuple template) throws RemoteException {
+		Tuple result = kernel.take(template);
+		if (result == null) {
+			result = (Tuple) this.manager.redistribute(this.serverAdd, "takeNoRedirect", template);
+		}
+		return result;
+	}
+
+	public Tuple takeNoRedirect(Tuple template) throws RemoteException {
 		return kernel.take(template);
 	}
 	
@@ -56,24 +78,58 @@ public class LindaServer extends UnicastRemoteObject implements RemoteLinda  {
 	
 	@Override
 	public Tuple tryTake(Tuple t) throws RemoteException {
+		Tuple result = kernel.tryTake(t);
+		if (result == null) {
+			result = (Tuple) this.manager.redistribute(this.serverAdd, "tryTakeNoRedirect", t);
+		}
+		return result;
+	}
+
+	public Tuple tryTakeNoRedirect(Tuple t) throws RemoteException {
 		return kernel.tryTake(t);
 	}
 	
 	@Override
 	public Tuple tryRead(Tuple t) throws RemoteException {
+		Tuple result = kernel.tryRead(t);
+		if (result == null) {
+			result = (Tuple) this.manager.redistribute(this.serverAdd, "tryReadNoRedirect", t);
+		}
+		return result;
+	}
+
+	public Tuple tryReadNoRedirect(Tuple t) throws RemoteException {
 		return kernel.tryRead(t);
 	}
+
 	@Override
 	public Collection<Tuple> readAll(Tuple t) throws RemoteException {
+		Collection<Tuple> result = kernel.readAll(t);
+		if (result == null) {
+			result = (Collection<Tuple>) this.manager.redistribute(this.serverAdd, "readAllNoRedirect", t);
+		}
+		return result;
+	}
+
+	public Collection<Tuple> readAllNoRedirect(Tuple t) throws RemoteException {
 		return kernel.readAll(t);
 	}
+
 	@Override
 	public Collection<Tuple> takeAll(Tuple t) throws RemoteException {
+		Collection<Tuple> result = kernel.takeAll(t);
+		if (result == null) {
+			result = (Collection<Tuple>) this.manager.redistribute(this.serverAdd, "takeAllNoRedirect", t);
+		}
+		return result;
+	}
+
+	public Collection<Tuple> takeAllNoRedirect(Tuple t) throws RemoteException {
 		return kernel.takeAll(t);
 	}
 	
 	@Override
-	public void eventRegister(eventMode mode, eventTiming timing, Tuple template, RemoteCallback callback) {
+	public void eventRegister(eventMode mode, eventTiming timing, Tuple template, RemoteCallback callback) throws RemoteException {
 		kernel.eventRegister(mode, timing, template, new Callback() {
 			
 			@Override
@@ -86,26 +142,22 @@ public class LindaServer extends UnicastRemoteObject implements RemoteLinda  {
 				}
 			}
 		});
+		this.manager.redistribute(this.serverAdd, "eventRegisterNoRedirect", mode, timing, template, callback);
 	}
 
-	public static void main(String[] args) {
-		try {
+	public void eventRegisterNoRedirect(eventMode mode, eventTiming timing, Tuple template, RemoteCallback callback) throws RemoteException {
+		kernel.eventRegister(mode, timing, template, new Callback() {
 
-			var registry = LocateRegistry.createRegistry(7774);
-			
-			LindaServer server = new LindaServer();
-			
-			
-			String url = "rmi://" + "localhost:7778" + "/TestRMI";
-		    System.out.println("Enregistrement de l'objet avec l'url : " + url);
-		    registry.rebind(url, server);
-
-		    System.out.println("Serveur lanc�");
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+			@Override
+			public void call(Tuple t) {
+				try {
+					callback.call(t);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 	}
+
 }
