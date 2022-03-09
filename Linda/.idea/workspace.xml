@@ -2,22 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d2af85f6-e176-4e96-a8e0-6153d377ce6c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/linda/server/GateKeeper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/linda/server/Manager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/linda/server/RemoteGateKeeper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/linda/search/basic/Code.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/linda/search/basic/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/linda/search/basic/Manager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/linda/search/basic/README" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/linda/search/basic/Searcher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/server/GateKeeper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/server/GateKeeper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/linda/server/LindaClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/server/LindaClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/linda/server/LindaServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/server/LindaServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/linda/server/RemoteLinda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/server/RemoteLinda.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/linda/shm/TupleSpaceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/server/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/server/Manager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/shm/CentralizedLinda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/shm/CentralizedLinda.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/linda/test/TestClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/test/TestClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

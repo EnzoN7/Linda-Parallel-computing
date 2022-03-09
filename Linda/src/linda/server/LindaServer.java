@@ -73,6 +73,7 @@ public class LindaServer extends UnicastRemoteObject implements RemoteLinda  {
 	
 	@Override
 	public void write(Tuple t) throws RemoteException {
+		System.out.println("Writing " + t + " to server: "  + this.serverAdd);
 		kernel.write(t);
 	}
 	

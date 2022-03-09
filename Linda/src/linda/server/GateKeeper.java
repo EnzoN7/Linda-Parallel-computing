@@ -14,6 +14,7 @@ public class GateKeeper extends UnicastRemoteObject implements RemoteGateKeeper 
 
     public GateKeeper(int partitions, Registry registry) throws RemoteException {
         this.registry = registry;
+        this.partitions = partitions;
     }
 
     public RemoteLinda connectMe() throws RemoteException {
@@ -22,7 +23,10 @@ public class GateKeeper extends UnicastRemoteObject implements RemoteGateKeeper 
             int accessPoint = (int) (Math.random()*partitions + 1);
             String url = "rmi://" + "localhost:7778" + "/Linda/server" + this.hashCode() + "" + accessPoint; // hashed for security
 
+            System.out.println("Connecting to server: " + accessPoint + " from : " + url);
+
             server = (RemoteLinda) registry.lookup(url);
+
 
         } catch (NotBoundException e) {
             e.printStackTrace();

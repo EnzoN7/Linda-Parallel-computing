@@ -31,10 +31,7 @@ public class LindaClient implements Linda {
 	private RemoteLinda remoteLinda;
 
 	
-    /** Initializes the Linda implementation.
-     *  @param serverURI the URI of the server, e.g. "rmi://localhost:4000/LindaServer" or "//localhost:4000/LindaServer".
-     */
-	// "rmi://" + InetAddress.getLocalHost().getHostAddress() + "/TestRMI"
+
     public LindaClient(String serverURI) {
     	
 		System.out.println("Lancement du client");

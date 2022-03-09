@@ -15,13 +15,13 @@ import linda.shm.callables.TakeCallable;
 /** Shared memory implementation of Linda. */
 public class CentralizedLinda implements Linda {
 	
-	static private ILindaMonitor monitor;
-	
-	static private ITupleSpace tupleSpace;
+	private ILindaMonitor monitor;
+
+	private ITupleSpace tupleSpace;
 	
 	private ExecutorService executorService;
 	
-	static private ICallbackManager callbackManager;
+	private ICallbackManager callbackManager;
 	
 	public CentralizedLinda() {
     	tupleSpace = new TupleSpace();

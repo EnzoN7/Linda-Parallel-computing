@@ -8,6 +8,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Manager  {
 
@@ -55,7 +57,9 @@ public class Manager  {
 
     public Object redistribute(int callerAdd, String methodName,Object ...args) throws RemoteException {
 
-        Object result = LocateRegistry.createRegistry(7774);
+        System.out.println("Redirecting to other servers");
+
+        Object result = null;
 
         for (int i = 1; i <= partitions; i++) {
             if (i == callerAdd) {
@@ -67,7 +71,9 @@ public class Manager  {
             try {
                 RemoteLinda server = (RemoteLinda) registry.lookup(url);
 
-                result = server.getClass().getMethod(methodName).invoke(args);
+
+
+                result = Arrays.stream(server.getClass().getMethods()).filter(method -> method.getName() == methodName).findFirst().get().invoke(server,args);
 
                 if (result != null) {
                     break;
@@ -78,8 +84,6 @@ public class Manager  {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
             }
         }
 
@@ -88,11 +92,11 @@ public class Manager  {
 
     public void startUp() {
         try {
+            startServers();
+
             String url = "rmi://" + "localhost:7778" + "/Linda";
 
             registry.rebind(url, this.gateKeeper);
-
-            startServers();
         } catch (RemoteException e) {
             e.printStackTrace();
         }
