@@ -29,7 +29,7 @@ public abstract class LindaParser {
 
     public LindaParser() {
 
-        basicCommandPattern = Pattern.compile("(READ|TAKE|WRITE) (.+)");
+        basicCommandPattern = Pattern.compile("(READ|TAKE|WRITE|READ_ALL|TAKE_ALL) (.+)");
         eventRegisterCommandPattern = Pattern.compile("(EVENT_REGISTER) (READ|TAKE) (IMMEDIATE|FUTURE) (.+) \"(.+)\"");
     }
 
@@ -107,7 +107,11 @@ public abstract class LindaParser {
     }
 
     protected boolean isBasicOperation(LindaOperation operation) {
-        return operation == LindaOperation.READ || operation == LindaOperation.TAKE || operation == LindaOperation.WRITE;
+        return  operation == LindaOperation.READ
+                || operation == LindaOperation.READ_ALL
+                || operation == LindaOperation.TAKE
+                || operation == LindaOperation.TAKE_ALL
+                || operation == LindaOperation.WRITE;
     }
 
     protected boolean isEventRegisterOperation(LindaOperation operation) {

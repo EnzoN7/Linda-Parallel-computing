@@ -4,6 +4,10 @@ public enum LindaOperation {
     READ,
     TAKE,
     WRITE,
+
+    READ_ALL,
+
+    TAKE_ALL,
     EVENT_REGISTER;
 
     public static LindaOperation getFromString(String _operation) {

@@ -6,6 +6,7 @@ import linda.server.interpreter.commands.LindaAllCommand;
 import linda.server.interpreter.commands.LindaBasicCommand;
 import linda.server.interpreter.commands.LindaEventRegisterCommand;
 
+import java.util.Collection;
 import java.util.List;
 
 public class LindaExecutor {
@@ -44,10 +45,21 @@ public class LindaExecutor {
 
             if(trace) System.out.println("Result of " + command + " : " + result);
         } else if(command.is(LindaOperation.WRITE) ) {
-            if(trace) System.out.println("Starts writing " + command);
+            if (trace) System.out.println("Starts writing " + command);
             client.write(command.getTuple());
-            if(trace) System.out.println("End writing " + command);
+            if (trace) System.out.println("End writing " + command);
+        } else if(command.is(LindaOperation.READ_ALL) ) {
+            if(trace) System.out.println("Run : " + command);
 
+            Collection<Tuple> result = client.readAll(command.getTuple());
+
+            if(trace) System.out.println("Result : " + result);
+        } else if(command.is(LindaOperation.TAKE_ALL) ) {
+            if(trace) System.out.println("Run : " + command);
+
+            Collection<Tuple> result = client.takeAll(command.getTuple());
+
+            if(trace) System.out.println("Result : " + result);
         } else {
             throw new RuntimeException("Incorrect operation, must be either READ, TAKE or WRITE");
         }

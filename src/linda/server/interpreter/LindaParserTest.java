@@ -266,4 +266,23 @@ public class LindaParserTest {
             throw new RuntimeException(e);
         }
     }
+
+    @Test
+    public void basicReadAllFromString() {
+        try {
+            parser = new LindaStringParser("READ_ALL [ 100 'c' ]");
+
+            var _cmd = parser.next();
+
+            Assert.assertTrue( _cmd.isPresent() );
+
+            LindaBasicCommand cmd = (LindaBasicCommand) _cmd.get();
+
+            Assert.assertEquals(cmd.getOperation(), LindaOperation.READ_ALL);
+            Assert.assertEquals(cmd.getTuple(), new Tuple(100, 'c'));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
