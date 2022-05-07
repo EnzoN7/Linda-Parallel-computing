@@ -14,9 +14,12 @@ public class LindaExecutor {
 
     private boolean trace;
 
-    public LindaExecutor(LindaClient client, boolean trace) {
+    private boolean timeEval;
+
+    public LindaExecutor(LindaClient client, boolean trace, boolean timeEval) {
         this.client = client;
         this.trace = trace;
+        this.timeEval = timeEval;
     }
 
     public void execute(LindaCommand command) {
@@ -31,12 +34,30 @@ public class LindaExecutor {
 
     public void execute(LindaBasicCommand command) {
 
+        long startTime = 0;
+        long endTime = 0;
+        long duration = 0;
+
         if(command.is(LindaOperation.READ) ) {
+
             if(trace) System.out.println("Run : " + command);
+
+            if(timeEval) {
+                startTime = System.nanoTime();
+            }
 
             Tuple result = client.read(command.getTuple());
 
+            if(timeEval)  {
+                endTime = System.nanoTime();
+
+                duration = (endTime - startTime) / 1000000 ;
+
+                System.out.println("Duration : " + duration + "ms");
+            }
+
             if(trace) System.out.println("Result : " + result);
+
         } else if(command.is(LindaOperation.TAKE) ) {
             if(trace) System.out.println("Run : " + command);
 

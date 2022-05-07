@@ -12,12 +12,12 @@ import java.io.FileNotFoundException;
 
 public class LindaInterpreterFactory {
 
-    public LindaInterpreter createFileInterperer(LindaClient client, String filePath) throws FileNotFoundException {
-        return new LindaInterpreter(new LindaFileParser(filePath), new LindaExecutor(client, true));
+    public LindaInterpreter createFileInterpreter(LindaClient client, String filePath) throws FileNotFoundException {
+        return new LindaInterpreter(new LindaFileParser(filePath), new LindaExecutor(client, true, true));
     }
 
     public LindaInterpreter createStringInterpreter(LindaClient client, String text) {
-        return new LindaInterpreter(new LindaStringParser(text), new LindaExecutor(client, true));
+        return new LindaInterpreter(new LindaStringParser(text), new LindaExecutor(client, true, true));
     }
 
     public LindaBasicCommand createReadCommand(Tuple template) {

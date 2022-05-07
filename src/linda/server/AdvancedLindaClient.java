@@ -6,8 +6,6 @@ import linda.server.interpreter.LindaInterpreterFactory;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class AdvancedLindaClient extends LindaClient {
 
@@ -27,7 +25,7 @@ public class AdvancedLindaClient extends LindaClient {
 
     protected void interpretFile(String filePath) {
         try {
-            this.interpreter = factory.createFileInterperer(this, filePath);
+            this.interpreter = factory.createFileInterpreter(this, filePath);
 
 
         } catch (FileNotFoundException e) {
