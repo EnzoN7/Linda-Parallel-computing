@@ -1,9 +1,12 @@
 package linda.server.interpreter;
 
+import linda.Linda;
 import linda.Tuple;
 import linda.TupleFormatException;
 import linda.server.interpreter.LindaCommand;
 import linda.server.interpreter.LindaOperation;
+import linda.server.interpreter.commands.LindaBasicCommand;
+import linda.server.interpreter.commands.LindaEventRegisterCommand;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,10 +24,13 @@ public abstract class LindaParser {
 
     private BufferedReader bufferedReader;
 
-    private Pattern pattern;
+    private Pattern basicCommandPattern;
+    private Pattern eventRegisterCommandPattern;
 
     public LindaParser() {
-        pattern = Pattern.compile("(READ|TAKE|WRITE) (.+)");
+
+        basicCommandPattern = Pattern.compile("(READ|TAKE|WRITE) (.+)");
+        eventRegisterCommandPattern = Pattern.compile("(EVENT_REGISTER) (READ|TAKE) (IMMEDIATE|FUTURE) (.+) \"(.+)\"");
     }
 
     public List<LindaCommand> parse() throws IOException {
@@ -42,15 +48,70 @@ public abstract class LindaParser {
     public abstract Optional<LindaCommand> next() throws Exception;
 
     protected LindaCommand parseCommand(String _command) {
-        Matcher matcher = pattern.matcher(_command);
-        if(matcher.matches()) {
-            String _operation = matcher.group(1);
-            String _tuple = matcher.group(2);
+        Matcher basicCommandMatcher = basicCommandPattern.matcher(_command);
+        Matcher eventRegisterCommandMatcher = eventRegisterCommandPattern.matcher(_command);
+        if(basicCommandMatcher.matches()) {
+            String _operation = basicCommandMatcher.group(1);
 
-            return new LindaCommand(this.parseOperation(_operation), this.parseTuple(_tuple));
-        } else {
+            LindaOperation operation = this.parseOperation(_operation);
+
+            if(this.isBasicOperation(operation)) {
+                String _tuple = basicCommandMatcher.group(2);
+                return new LindaBasicCommand(operation, this.parseTuple(_tuple));
+            } else {
+                throw new RuntimeException("Unhandled operation");
+            }
+        }
+        else if(eventRegisterCommandMatcher.matches()) {
+            String _operation = eventRegisterCommandMatcher.group(1);
+
+            LindaOperation operation = this.parseOperation(_operation);
+            if(this.isEventRegisterOperation(operation)) {
+                String _mode = eventRegisterCommandMatcher.group(2);
+                String _timing = eventRegisterCommandMatcher.group(3);
+                String _template = eventRegisterCommandMatcher.group(4);
+                String _callbackClassName = eventRegisterCommandMatcher.group(5);
+
+                return new LindaEventRegisterCommand(operation, this.parseMode(_mode), this.parseTiming(_timing), this.parseTuple(_template), this.parseCallbackClassName(_callbackClassName));
+            } else {
+                throw new RuntimeException("Unhandled operation");
+            }
+        }
+        else {
             throw new RuntimeException("Error parsing command " + _command);
         }
+    }
+
+    protected String parseCallbackClassName(String callbackClassName) {
+        return callbackClassName;
+    }
+
+    protected Linda.eventMode parseMode(String mode) {
+        if(mode.equalsIgnoreCase("READ")) {
+            return Linda.eventMode.READ;
+        } else if(mode.equalsIgnoreCase("TAKE")) {
+            return Linda.eventMode.TAKE;
+        } else {
+            throw new RuntimeException("Unhandled event mode " + mode);
+        }
+    }
+
+    protected Linda.eventTiming parseTiming(String timing) {
+        if(timing.equalsIgnoreCase("IMMEDIATE")) {
+            return Linda.eventTiming.IMMEDIATE;
+        } else if(timing.equalsIgnoreCase("FUTURE")) {
+            return Linda.eventTiming.FUTURE;
+        } else {
+            throw new RuntimeException("Unhandled event timing " + timing);
+        }
+    }
+
+    protected boolean isBasicOperation(LindaOperation operation) {
+        return operation == LindaOperation.READ || operation == LindaOperation.TAKE || operation == LindaOperation.WRITE;
+    }
+
+    protected boolean isEventRegisterOperation(LindaOperation operation) {
+        return operation == LindaOperation.EVENT_REGISTER;
     }
 
     protected LindaOperation parseOperation(String _operation) {

@@ -2,7 +2,9 @@ package linda.server.interpreter;
 
 import linda.Tuple;
 import linda.server.LindaClient;
+import linda.server.interpreter.commands.LindaAllCommand;
 import linda.server.interpreter.commands.LindaBasicCommand;
+import linda.server.interpreter.commands.LindaEventRegisterCommand;
 
 import java.util.List;
 
@@ -15,6 +17,16 @@ public class LindaExecutor {
     public LindaExecutor(LindaClient client, boolean trace) {
         this.client = client;
         this.trace = trace;
+    }
+
+    public void execute(LindaCommand command) {
+        if(command instanceof LindaBasicCommand) {
+            this.execute((LindaBasicCommand) command);
+        } else if(command instanceof LindaEventRegisterCommand) {
+            this.execute((LindaEventRegisterCommand) command);
+        } else if(command instanceof  LindaAllCommand) {
+            this.execute((LindaAllCommand) command);
+        }
     }
 
     public void execute(LindaBasicCommand command) {
@@ -37,13 +49,34 @@ public class LindaExecutor {
             if(trace) System.out.println("End writing " + command);
 
         } else {
-            throw new RuntimeException("Incorrect operation");
+            throw new RuntimeException("Incorrect operation, must be either READ, TAKE or WRITE");
         }
     }
 
-    public void execute(List<LindaBasicCommand> commands) {
-        for(LindaBasicCommand command : commands) {
-            this.execute(command);
+    public void execute(LindaEventRegisterCommand command) {
+        if(command.is(LindaOperation.EVENT_REGISTER)) {
+            if(trace) System.out.println("Starts registring event " + command.getCallbackClass().getName());
+            client.eventRegister(command.getMode(), command.getTiming(), command.getTemplate(), command.createCallbackInstance());
+            if(trace) System.out.println("End registring event " + command.getCallbackClass().getName());
+        } else {
+            throw new RuntimeException("Incorrect operation, must be EVENT_REGISTER");
+        }
+    }
+
+    public void execute(LindaAllCommand command) {
+        throw new RuntimeException("LindaAllCommand not yet implemented.");
+    }
+
+    public void execute(List<LindaCommand> commands) {
+        for(LindaCommand command : commands) {
+            if(command instanceof LindaBasicCommand)
+                this.execute((LindaBasicCommand) command);
+            else if(command instanceof LindaEventRegisterCommand)
+                this.execute((LindaEventRegisterCommand) command);
+            else if(command instanceof LindaAllCommand)
+                this.execute((LindaAllCommand) command);
+            else
+                throw new RuntimeException("Unhandled LindaCommand type " + command.getClass());
         }
     }
 }

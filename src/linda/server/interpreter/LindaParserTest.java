@@ -1,6 +1,10 @@
 package linda.server.interpreter;
 
+import linda.Linda;
 import linda.Tuple;
+import linda.callbacks.HelloCallback;
+import linda.server.interpreter.commands.LindaBasicCommand;
+import linda.server.interpreter.commands.LindaEventRegisterCommand;
 import linda.server.interpreter.parsers.LindaFileParser;
 import linda.server.interpreter.parsers.LindaStringParser;
 import org.junit.Assert;
@@ -52,7 +56,7 @@ public class LindaParserTest {
 
             Assert.assertTrue( _cmd.isPresent() );
 
-            var cmd = _cmd.get();
+            LindaBasicCommand cmd = (LindaBasicCommand) _cmd.get();
 
             Assert.assertEquals(cmd.getOperation(), LindaOperation.READ);
             Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
@@ -71,7 +75,7 @@ public class LindaParserTest {
 
             Assert.assertTrue( _cmd.isPresent() );
 
-            var cmd = _cmd.get();
+            LindaBasicCommand cmd = (LindaBasicCommand) _cmd.get();
 
             Assert.assertEquals(cmd.getOperation(), LindaOperation.TAKE);
             Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
@@ -90,7 +94,7 @@ public class LindaParserTest {
 
             Assert.assertTrue( _cmd.isPresent() );
 
-            var cmd = _cmd.get();
+            LindaBasicCommand cmd = (LindaBasicCommand) _cmd.get();
 
             Assert.assertEquals(cmd.getOperation(), LindaOperation.WRITE);
             Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
@@ -109,7 +113,7 @@ public class LindaParserTest {
 
             Assert.assertTrue( _cmd.isPresent() );
 
-            var cmd = _cmd.get();
+            LindaBasicCommand cmd = (LindaBasicCommand) _cmd.get();
 
             Assert.assertEquals(cmd.getOperation(), LindaOperation.READ);
             Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
@@ -128,7 +132,7 @@ public class LindaParserTest {
 
             Assert.assertTrue( _cmd.isPresent() );
 
-            var cmd = _cmd.get();
+            LindaBasicCommand cmd = (LindaBasicCommand) _cmd.get();
 
             Assert.assertEquals(cmd.getOperation(), LindaOperation.TAKE);
             Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
@@ -147,7 +151,7 @@ public class LindaParserTest {
 
             Assert.assertTrue( _cmd.isPresent() );
 
-            var cmd = _cmd.get();
+            LindaBasicCommand cmd = (LindaBasicCommand) _cmd.get();
 
             Assert.assertEquals(cmd.getOperation(), LindaOperation.WRITE);
             Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
@@ -166,7 +170,7 @@ public class LindaParserTest {
 
             Assert.assertTrue( _cmd.isPresent() );
 
-            var cmd = _cmd.get();
+            LindaBasicCommand cmd = (LindaBasicCommand) _cmd.get();
 
             Assert.assertEquals(cmd.getOperation(), LindaOperation.READ);
             Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
@@ -175,7 +179,7 @@ public class LindaParserTest {
 
             Assert.assertTrue( _cmd.isPresent() );
 
-            cmd = _cmd.get();
+            cmd = (LindaBasicCommand) _cmd.get();
 
             Assert.assertEquals(cmd.getOperation(), LindaOperation.READ);
             Assert.assertEquals(cmd.getTuple(), new Tuple(100 ));
@@ -194,7 +198,7 @@ public class LindaParserTest {
 
             Assert.assertTrue( _cmd.isPresent() );
 
-            var cmd = _cmd.get();
+            LindaBasicCommand cmd = (LindaBasicCommand) _cmd.get();
 
             Assert.assertEquals(cmd.getOperation(), LindaOperation.TAKE);
             Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
@@ -203,7 +207,7 @@ public class LindaParserTest {
 
             Assert.assertTrue( _cmd.isPresent() );
 
-            cmd = _cmd.get();
+            cmd = (LindaBasicCommand) _cmd.get();
 
             Assert.assertEquals(cmd.getOperation(), LindaOperation.TAKE);
             Assert.assertEquals(cmd.getTuple(), new Tuple( 100 ));
@@ -222,7 +226,7 @@ public class LindaParserTest {
 
             Assert.assertTrue( _cmd.isPresent() );
 
-            var cmd = _cmd.get();
+            LindaBasicCommand cmd = (LindaBasicCommand) _cmd.get();
 
             Assert.assertEquals(cmd.getOperation(), LindaOperation.WRITE);
             Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
@@ -231,10 +235,32 @@ public class LindaParserTest {
 
             Assert.assertTrue( _cmd.isPresent() );
 
-            cmd = _cmd.get();
+            cmd = (LindaBasicCommand) _cmd.get();
 
             Assert.assertEquals(cmd.getOperation(), LindaOperation.WRITE);
             Assert.assertEquals(cmd.getTuple(), new Tuple( 100 ));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void basicEventRegisterFromString() {
+        try {
+            parser = new LindaStringParser("EVENT_REGISTER READ IMMEDIATE [ 100 ] \"linda.callbacks.HelloCallback\"");
+
+            var _cmd = parser.next();
+
+            Assert.assertTrue( _cmd.isPresent() );
+
+            LindaEventRegisterCommand cmd = (LindaEventRegisterCommand) _cmd.get();
+
+            Assert.assertEquals(cmd.getOperation(), LindaOperation.EVENT_REGISTER);
+            Assert.assertEquals(cmd.getMode(), Linda.eventMode.READ);
+            Assert.assertEquals(cmd.getTiming(), Linda.eventTiming.IMMEDIATE);
+            Assert.assertEquals(cmd.getTemplate(), new Tuple(100));
+            Assert.assertEquals(cmd.getCallbackClass(), HelloCallback.class);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

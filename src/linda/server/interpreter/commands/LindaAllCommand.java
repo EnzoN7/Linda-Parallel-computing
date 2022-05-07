@@ -1,4 +1,10 @@
 package linda.server.interpreter.commands;
 
-public class LindaAllCommand {
+import linda.server.interpreter.LindaCommand;
+import linda.server.interpreter.LindaOperation;
+
+public class LindaAllCommand extends LindaCommand {
+    public LindaAllCommand(LindaOperation operation) {
+        super(operation);
+    }
 }
