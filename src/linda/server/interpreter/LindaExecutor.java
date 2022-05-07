@@ -2,7 +2,6 @@ package linda.server.interpreter;
 
 import linda.Tuple;
 import linda.server.LindaClient;
-import linda.server.interpreter.commands.LindaAllCommand;
 import linda.server.interpreter.commands.LindaBasicCommand;
 import linda.server.interpreter.commands.LindaEventRegisterCommand;
 
@@ -25,8 +24,8 @@ public class LindaExecutor {
             this.execute((LindaBasicCommand) command);
         } else if(command instanceof LindaEventRegisterCommand) {
             this.execute((LindaEventRegisterCommand) command);
-        } else if(command instanceof  LindaAllCommand) {
-            this.execute((LindaAllCommand) command);
+        } else {
+            throw new RuntimeException("Unhandled command " + command.getClass());
         }
     }
 
@@ -75,18 +74,12 @@ public class LindaExecutor {
         }
     }
 
-    public void execute(LindaAllCommand command) {
-        throw new RuntimeException("LindaAllCommand not yet implemented.");
-    }
-
     public void execute(List<LindaCommand> commands) {
         for(LindaCommand command : commands) {
             if(command instanceof LindaBasicCommand)
                 this.execute((LindaBasicCommand) command);
             else if(command instanceof LindaEventRegisterCommand)
                 this.execute((LindaEventRegisterCommand) command);
-            else if(command instanceof LindaAllCommand)
-                this.execute((LindaAllCommand) command);
             else
                 throw new RuntimeException("Unhandled LindaCommand type " + command.getClass());
         }
