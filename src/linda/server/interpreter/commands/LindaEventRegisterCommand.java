@@ -1,2 +1,5 @@
-package linda.server.interpreter.commands;public class LindaEventRegisterCommand {
+package linda.server.interpreter.commands;
+
+public class LindaEventRegisterCommand {
+    
 }

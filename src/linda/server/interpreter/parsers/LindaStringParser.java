@@ -1,11 +1,8 @@
-package linda.server.parser;
+package linda.server.interpreter.parsers;
 
-import linda.server.file.LindaFileCommand;
+import linda.server.interpreter.LindaCommand;
+import linda.server.interpreter.LindaParser;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -16,11 +13,11 @@ public class LindaStringParser extends LindaParser {
     public LindaStringParser(String text) {
         super();
 
-        scanner = new Scanner(text);
+        scanner = new Scanner(text).useDelimiter("\n");
     }
 
     @Override
-    public Optional<LindaFileCommand> next() throws Exception {
+    public Optional<LindaCommand> next() throws Exception {
 
         if(!scanner.hasNext()) {
             scanner.close();

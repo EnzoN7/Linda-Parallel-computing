@@ -1,16 +1,10 @@
-package linda.server.file;
+package linda.server.interpreter.parsers;
 
-import linda.Tuple;
-import linda.TupleFormatException;
-import linda.server.parser.LindaOperation;
-import linda.server.parser.LindaParser;
+import linda.server.interpreter.LindaCommand;
+import linda.server.interpreter.LindaParser;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class LindaFileParser extends LindaParser {
 
@@ -30,7 +24,7 @@ public class LindaFileParser extends LindaParser {
     }
 
     @Override
-    public Optional<LindaFileCommand> next() throws Exception {
+    public Optional<LindaCommand> next() throws Exception {
         String _command = bufferedReader.readLine();
 
         if(_command == null)

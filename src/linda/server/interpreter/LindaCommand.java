@@ -1,17 +1,13 @@
-package linda.server.file;
+package linda.server.interpreter;
 
 import linda.Tuple;
-import linda.server.parser.LindaOperation;
 
-public class LindaFileCommand {
+public class LindaCommand {
 
     protected LindaOperation operation;
 
-    protected Tuple tuple;
-
-    public LindaFileCommand(LindaOperation operation, Tuple tuple) {
+    public LindaCommand(LindaOperation operation) {
         this.operation = operation;
-        this.tuple = tuple;
     }
 
     public boolean is(LindaOperation operation) {
@@ -26,11 +22,5 @@ public class LindaFileCommand {
         this.operation = operation;
     }
 
-    public Tuple getTuple() {
-        return tuple;
-    }
 
-    public void setTuple(Tuple tuple) {
-        this.tuple = tuple;
-    }
 }

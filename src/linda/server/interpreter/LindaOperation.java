@@ -1,4 +1,4 @@
-package linda.server.parser;
+package linda.server.interpreter;
 
 public enum LindaOperation {
     READ,

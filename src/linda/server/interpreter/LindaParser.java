@@ -1,11 +1,11 @@
-package linda.server.parser;
+package linda.server.interpreter;
 
 import linda.Tuple;
 import linda.TupleFormatException;
-import linda.server.file.LindaFileCommand;
+import linda.server.interpreter.LindaCommand;
+import linda.server.interpreter.LindaOperation;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,10 +27,10 @@ public abstract class LindaParser {
         pattern = Pattern.compile("(READ|TAKE|WRITE) (.+)");
     }
 
-    public List<LindaFileCommand> parse() throws IOException {
+    public List<LindaCommand> parse() throws IOException {
         String _command = null;
 
-        List<LindaFileCommand> commands = new ArrayList<>();
+        List<LindaCommand> commands = new ArrayList<>();
 
         while( (_command = bufferedReader.readLine()) != null) {
             commands.add( this.parseCommand(_command) );
@@ -39,15 +39,15 @@ public abstract class LindaParser {
         return commands;
     }
 
-    public abstract Optional<LindaFileCommand> next() throws Exception;
+    public abstract Optional<LindaCommand> next() throws Exception;
 
-    protected LindaFileCommand parseCommand(String _command) {
+    protected LindaCommand parseCommand(String _command) {
         Matcher matcher = pattern.matcher(_command);
         if(matcher.matches()) {
             String _operation = matcher.group(1);
             String _tuple = matcher.group(2);
 
-            return new LindaFileCommand(this.parseOperation(_operation), this.parseTuple(_tuple));
+            return new LindaCommand(this.parseOperation(_operation), this.parseTuple(_tuple));
         } else {
             throw new RuntimeException("Error parsing command " + _command);
         }

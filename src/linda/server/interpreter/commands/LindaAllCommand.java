@@ -1,2 +1,4 @@
-package linda.server.interpreter.commands;public class LindaAllCommand {
+package linda.server.interpreter.commands;
+
+public class LindaAllCommand {
 }

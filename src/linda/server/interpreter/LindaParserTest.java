@@ -1,19 +1,20 @@
-package linda.server.file;
+package linda.server.interpreter;
 
 import linda.Tuple;
-import linda.server.parser.LindaOperation;
+import linda.server.interpreter.parsers.LindaFileParser;
+import linda.server.interpreter.parsers.LindaStringParser;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.*;
 
-public class LindaFileTest {
+public class LindaParserTest {
 
     File tempFileOneLineRead, tempFileOneLineTake, tempFileOneLineWrite;
 
-    LindaFileParser parser;
+    LindaParser parser;
 
-    public LindaFileTest() {
+    public LindaParserTest() {
         FileWriter fileWriter;
 
         try {
@@ -43,7 +44,7 @@ public class LindaFileTest {
     }
 
     @Test
-    public void basicRead() {
+    public void basicReadFromFile() {
         try {
             parser = new LindaFileParser(tempFileOneLineRead.getPath());
 
@@ -56,13 +57,13 @@ public class LindaFileTest {
             Assert.assertEquals(cmd.getOperation(), LindaOperation.READ);
             Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Test
-    public void basicTake() {
+    public void basicTakeFromFile() {
         try {
             parser = new LindaFileParser(tempFileOneLineTake.getPath());
 
@@ -75,13 +76,13 @@ public class LindaFileTest {
             Assert.assertEquals(cmd.getOperation(), LindaOperation.TAKE);
             Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Test
-    public void basicWrite() {
+    public void basicWriteFromFile() {
         try {
             parser = new LindaFileParser(tempFileOneLineWrite.getPath());
 
@@ -94,7 +95,148 @@ public class LindaFileTest {
             Assert.assertEquals(cmd.getOperation(), LindaOperation.WRITE);
             Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
 
-        } catch (IOException e) {
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void basicReadFromString() {
+        try {
+            parser = new LindaStringParser("READ [ true 2 'b' ]\n" );
+
+            var _cmd = parser.next();
+
+            Assert.assertTrue( _cmd.isPresent() );
+
+            var cmd = _cmd.get();
+
+            Assert.assertEquals(cmd.getOperation(), LindaOperation.READ);
+            Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void basicTakeFromString() {
+        try {
+            parser = new LindaStringParser("TAKE [ true 2 'b' ]\n" );
+
+            var _cmd = parser.next();
+
+            Assert.assertTrue( _cmd.isPresent() );
+
+            var cmd = _cmd.get();
+
+            Assert.assertEquals(cmd.getOperation(), LindaOperation.TAKE);
+            Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void basicWriteFromString() {
+        try {
+            parser = new LindaStringParser("WRITE [ true 2 'b' ]\n" );
+
+            var _cmd = parser.next();
+
+            Assert.assertTrue( _cmd.isPresent() );
+
+            var cmd = _cmd.get();
+
+            Assert.assertEquals(cmd.getOperation(), LindaOperation.WRITE);
+            Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void multipleReadFromString() {
+        try {
+            parser = new LindaStringParser("READ [ true 2 'b' ]\nREAD [ 100 ]\n" );
+
+            var _cmd = parser.next();
+
+            Assert.assertTrue( _cmd.isPresent() );
+
+            var cmd = _cmd.get();
+
+            Assert.assertEquals(cmd.getOperation(), LindaOperation.READ);
+            Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
+
+            _cmd = parser.next();
+
+            Assert.assertTrue( _cmd.isPresent() );
+
+            cmd = _cmd.get();
+
+            Assert.assertEquals(cmd.getOperation(), LindaOperation.READ);
+            Assert.assertEquals(cmd.getTuple(), new Tuple(100 ));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void multipleTakeFromString() {
+        try {
+            parser = new LindaStringParser("TAKE [ true 2 'b' ]\nTAKE [ 100 ]\n" );
+
+            var _cmd = parser.next();
+
+            Assert.assertTrue( _cmd.isPresent() );
+
+            var cmd = _cmd.get();
+
+            Assert.assertEquals(cmd.getOperation(), LindaOperation.TAKE);
+            Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
+
+            _cmd = parser.next();
+
+            Assert.assertTrue( _cmd.isPresent() );
+
+            cmd = _cmd.get();
+
+            Assert.assertEquals(cmd.getOperation(), LindaOperation.TAKE);
+            Assert.assertEquals(cmd.getTuple(), new Tuple( 100 ));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void multipleWriteFromString() {
+        try {
+            parser = new LindaStringParser("WRITE [ true 2 'b' ]\nWRITE [ 100 ]\n" );
+
+            var _cmd = parser.next();
+
+            Assert.assertTrue( _cmd.isPresent() );
+
+            var cmd = _cmd.get();
+
+            Assert.assertEquals(cmd.getOperation(), LindaOperation.WRITE);
+            Assert.assertEquals(cmd.getTuple(), new Tuple(true, 2, 'b'));
+
+            _cmd = parser.next();
+
+            Assert.assertTrue( _cmd.isPresent() );
+
+            cmd = _cmd.get();
+
+            Assert.assertEquals(cmd.getOperation(), LindaOperation.WRITE);
+            Assert.assertEquals(cmd.getTuple(), new Tuple( 100 ));
+
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
