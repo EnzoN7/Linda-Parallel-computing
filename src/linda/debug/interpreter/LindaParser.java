@@ -31,7 +31,7 @@ public abstract class LindaParser {
 
         basicCommandPattern = Pattern.compile("(READ|TAKE|WRITE|READ_ALL|TAKE_ALL) (.+)");
         eventRegisterCommandPattern = Pattern.compile("(EVENT_REGISTER) (READ|TAKE) (IMMEDIATE|FUTURE) (.+) \"(.+)\"");
-        debugCommandPattern = Pattern.compile("(DEBUG|MEMORY)");
+        debugCommandPattern = Pattern.compile("(DEBUG|MEMORY|HISTORY|STATS)");
     }
 
     public List<LindaCommand> parse() throws IOException {

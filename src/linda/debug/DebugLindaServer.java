@@ -1,15 +1,25 @@
 package linda.debug;
 
 import linda.Tuple;
+import linda.debug.evaluator.LindaEvaluation;
+import linda.debug.evaluator.LindaEvaluator;
 import linda.server.LindaServer;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class DebugLindaServer extends LindaServer implements DebugRemoteLinda {
+
+    private LindaEvaluator evaluator;
+
     public DebugLindaServer() throws RemoteException {
         this.kernel = new DebugCentralizedLinda();
+        this.evaluator = new LindaEvaluator();
+
+        this.getDebugKernel().setObserver(this.evaluator);
     }
 
     protected DebugCentralizedLinda getDebugKernel() {
@@ -54,6 +64,11 @@ public class DebugLindaServer extends LindaServer implements DebugRemoteLinda {
     @Override
     public int getAvailableProcessors() throws RemoteException {
         return this.getDebugKernel().getAvailableProcessors();
+    }
+
+    @Override
+    public Map<UUID, LindaEvaluation> getHistory() throws RemoteException {
+        return this.evaluator.getHistory();
     }
 
     public static void main(String[] args) {

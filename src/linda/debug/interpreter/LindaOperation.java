@@ -12,7 +12,11 @@ public enum LindaOperation {
 
     DEBUG,
 
-    MEMORY;
+    MEMORY,
+
+    HISTORY,
+
+    STATS;
 
 
     public static LindaOperation getFromString(String _operation) {

@@ -1,6 +1,7 @@
 package linda.debug;
 
 import linda.Tuple;
+import linda.debug.evaluator.LindaEvaluation;
 import linda.debug.interpreter.LindaInterpreter;
 import linda.debug.interpreter.LindaInterpreterFactory;
 import linda.server.LindaClient;
@@ -9,7 +10,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class DebugLindaClient extends LindaClient implements DebugLinda {
 
@@ -200,6 +203,15 @@ public class DebugLindaClient extends LindaClient implements DebugLinda {
     public int getAvailableProcessors() {
         try {
             return this.getDebugRemoteLinda().getAvailableProcessors();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Map<UUID, LindaEvaluation> getHistory() {
+        try {
+            return this.getDebugRemoteLinda().getHistory();
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

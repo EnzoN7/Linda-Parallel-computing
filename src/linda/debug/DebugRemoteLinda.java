@@ -1,10 +1,13 @@
 package linda.debug;
 
 import linda.Tuple;
+import linda.debug.evaluator.LindaEvaluation;
 import linda.server.RemoteLinda;
 
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public interface DebugRemoteLinda extends RemoteLinda {
     List<Tuple> getTuples() throws RemoteException;
@@ -22,4 +25,6 @@ public interface DebugRemoteLinda extends RemoteLinda {
     long getMaxMemory() throws RemoteException;
 
     int getAvailableProcessors() throws RemoteException;
+
+    Map<UUID, LindaEvaluation> getHistory() throws  RemoteException;
 }

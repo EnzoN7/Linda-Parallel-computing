@@ -31,6 +31,10 @@ public class LindaExecutor {
             runMemory();
         } else if(command.getOperation().equals(LindaOperation.MEMORY)){
             runDebug();
+        } else if(command.getOperation().equals(LindaOperation.HISTORY)){
+            runHistory();
+        } else if(command.getOperation().equals(LindaOperation.STATS)){
+            runStats();
         } else {
             throw new RuntimeException("Unhandled command " + command.getClass());
         }
@@ -61,29 +65,29 @@ public class LindaExecutor {
 
     }
 
-    public void execute(LindaBasicCommand command) {
+    private void runHistory() {
+        var history = client.getHistory();
 
-        long startTime = 0;
-        long endTime = 0;
-        long duration = 0;
+        if(history.isEmpty()) {
+            System.out.println("History is empty.");
+        }
+
+        for(var element : history.entrySet()) {
+            System.out.println(element.getValue().operation + " " + element.getValue().tuple + " : " + element.getValue().duration);
+        }
+    }
+
+    private void runStats() {
+
+    }
+
+    public void execute(LindaBasicCommand command) {
 
         if(command.is(LindaOperation.READ) ) {
 
             if(trace) System.out.println("Run : " + command);
 
-            if(timeEval) {
-                startTime = System.nanoTime();
-            }
-
             Tuple result = client.read(command.getTuple());
-
-            if(timeEval)  {
-                endTime = System.nanoTime();
-
-                duration = (endTime - startTime) / 1000000 ;
-
-                System.out.println("Duration : " + duration + "ms");
-            }
 
             if(trace) System.out.println("Result : " + result);
 
@@ -133,5 +137,9 @@ public class LindaExecutor {
             else
                 throw new RuntimeException("Unhandled LindaCommand type " + command.getClass());
         }
+    }
+
+    public DebugLindaClient getClient() {
+        return client;
     }
 }

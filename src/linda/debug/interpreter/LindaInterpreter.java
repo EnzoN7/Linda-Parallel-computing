@@ -1,5 +1,7 @@
 package linda.debug.interpreter;
 
+import linda.debug.evaluator.LindaEvaluator;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -10,10 +12,13 @@ public class LindaInterpreter {
 
     private LindaExecutor executor;
 
+    private LindaEvaluator evaluator;
 
-    public LindaInterpreter(LindaParser parser, LindaExecutor executor) {
+    public LindaInterpreter(LindaParser parser, LindaExecutor executor, LindaEvaluator evaluator) {
         this.parser = parser;
         this.executor = executor;
+        this.evaluator = evaluator;
+
     }
 
     public void next() throws Exception {

@@ -3,6 +3,7 @@ package linda.debug.interpreter;
 import linda.Linda;
 import linda.Tuple;
 import linda.debug.DebugLindaClient;
+import linda.debug.evaluator.LindaEvaluator;
 import linda.debug.interpreter.commands.LindaBasicCommand;
 import linda.debug.interpreter.commands.LindaEventRegisterCommand;
 import linda.debug.interpreter.parsers.LindaFileParser;
@@ -13,11 +14,11 @@ import java.io.FileNotFoundException;
 public class LindaInterpreterFactory {
 
     public LindaInterpreter createFileInterpreter(DebugLindaClient client, String filePath) throws FileNotFoundException {
-        return new LindaInterpreter(new LindaFileParser(filePath), new LindaExecutor(client, true, true));
+        return new LindaInterpreter(new LindaFileParser(filePath), new LindaExecutor(client, true, true), new LindaEvaluator());
     }
 
     public LindaInterpreter createStringInterpreter(DebugLindaClient client, String text) {
-        return new LindaInterpreter(new LindaStringParser(text), new LindaExecutor(client, true, true));
+        return new LindaInterpreter(new LindaStringParser(text), new LindaExecutor(client, true, true), new LindaEvaluator());
     }
 
     public LindaBasicCommand createReadCommand(Tuple template) {
