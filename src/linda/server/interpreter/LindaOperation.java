@@ -8,7 +8,12 @@ public enum LindaOperation {
     READ_ALL,
 
     TAKE_ALL,
-    EVENT_REGISTER;
+    EVENT_REGISTER,
+
+    DEBUG,
+
+    MEMORY;
+
 
     public static LindaOperation getFromString(String _operation) {
         for(var operation : LindaOperation.values()) {

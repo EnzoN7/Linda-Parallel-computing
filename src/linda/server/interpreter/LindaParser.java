@@ -3,8 +3,6 @@ package linda.server.interpreter;
 import linda.Linda;
 import linda.Tuple;
 import linda.TupleFormatException;
-import linda.server.interpreter.LindaCommand;
-import linda.server.interpreter.LindaOperation;
 import linda.server.interpreter.commands.LindaBasicCommand;
 import linda.server.interpreter.commands.LindaEventRegisterCommand;
 
@@ -27,10 +25,13 @@ public abstract class LindaParser {
     private Pattern basicCommandPattern;
     private Pattern eventRegisterCommandPattern;
 
+    private Pattern debugCommandPattern;
+
     public LindaParser() {
 
         basicCommandPattern = Pattern.compile("(READ|TAKE|WRITE|READ_ALL|TAKE_ALL) (.+)");
         eventRegisterCommandPattern = Pattern.compile("(EVENT_REGISTER) (READ|TAKE) (IMMEDIATE|FUTURE) (.+) \"(.+)\"");
+        debugCommandPattern = Pattern.compile("(DEBUG|MEMORY)");
     }
 
     public List<LindaCommand> parse() throws IOException {
@@ -50,6 +51,7 @@ public abstract class LindaParser {
     protected LindaCommand parseCommand(String _command) {
         Matcher basicCommandMatcher = basicCommandPattern.matcher(_command);
         Matcher eventRegisterCommandMatcher = eventRegisterCommandPattern.matcher(_command);
+        Matcher debugCommandMatcher = debugCommandPattern.matcher(_command);
         if(basicCommandMatcher.matches()) {
             String _operation = basicCommandMatcher.group(1);
 
@@ -76,6 +78,13 @@ public abstract class LindaParser {
             } else {
                 throw new RuntimeException("Unhandled operation");
             }
+        }
+        else if(debugCommandMatcher.matches()) {
+            String _operation = debugCommandMatcher.group(0);
+
+            LindaOperation operation = this.parseOperation(_operation);
+
+            return new LindaCommand(operation);
         }
         else {
             throw new RuntimeException("Error parsing command " + _command);

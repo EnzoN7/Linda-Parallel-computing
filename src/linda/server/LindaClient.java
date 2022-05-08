@@ -25,7 +25,7 @@ import linda.Tuple;
  * */
 public class LindaClient implements Linda {
 	
-	private RemoteLinda remoteLinda;
+	protected RemoteLinda remoteLinda;
 	
 	private ExecutorService executor;
 	

@@ -24,7 +24,7 @@ public class LindaServer extends UnicastRemoteObject implements RemoteLinda  {
 	 */
 	private static final long serialVersionUID = 8835789050647334792L;
 	
-	private CentralizedLinda kernel;
+	protected CentralizedLinda kernel;
 	
 	public LindaServer() throws RemoteException {
 		kernel = new CentralizedLinda();

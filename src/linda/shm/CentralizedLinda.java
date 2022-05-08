@@ -17,7 +17,7 @@ public class CentralizedLinda implements Linda {
 	
 	static private ILindaMonitor monitor;
 	
-	static private ITupleSpace tupleSpace;
+	static protected ITupleSpace tupleSpace;
 	
 	private ExecutorService executorService;
 	

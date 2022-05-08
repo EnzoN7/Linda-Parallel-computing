@@ -1,13 +1,18 @@
 package linda.server;
 
+import linda.Tuple;
+import linda.debug.DebugLinda;
+import linda.debug.DebugRemoteLinda;
 import linda.server.interpreter.LindaInterpreter;
 import linda.server.interpreter.LindaInterpreterFactory;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.rmi.RemoteException;
+import java.util.List;
 import java.util.Scanner;
 
-public class AdvancedLindaClient extends LindaClient {
+public class AdvancedLindaClient extends LindaClient implements DebugLinda {
 
     protected String filePath;
 
@@ -122,6 +127,82 @@ public class AdvancedLindaClient extends LindaClient {
             System.out.println("Enter a command..");
 
             client.readUserCmds();
+        }
+    }
+
+    protected DebugRemoteLinda getDebugRemoteLinda() {
+        return (DebugRemoteLinda)remoteLinda;
+    }
+
+    @Override
+    public List<Tuple> getTuples() {
+        try {
+            return this.getDebugRemoteLinda().getTuples();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public long getTupleSpaceSize() {
+        try {
+            return this.getDebugRemoteLinda().getTupleSpaceSize();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int getTuplesNumber() {
+        try {
+            return this.getDebugRemoteLinda().getTuplesNumber();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public long getFreeMemory() {
+        try {
+            return this.getDebugRemoteLinda().getFreeMemory();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public long getTotalMemory() {
+        try {
+            return this.getDebugRemoteLinda().getTotalMemory();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public long getInUseMemory() {
+        try {
+            return this.getDebugRemoteLinda().getInUseMemory();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public long getMaxMemory() {
+        try {
+            return this.getDebugRemoteLinda().getMaxMemory();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int getAvailableProcessors() {
+        try {
+            return this.getDebugRemoteLinda().getAvailableProcessors();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
         }
     }
 }

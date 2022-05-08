@@ -2,6 +2,7 @@ package linda.server.interpreter;
 
 import linda.Linda;
 import linda.Tuple;
+import linda.server.AdvancedLindaClient;
 import linda.server.LindaClient;
 import linda.server.interpreter.commands.LindaBasicCommand;
 import linda.server.interpreter.commands.LindaEventRegisterCommand;
@@ -12,11 +13,11 @@ import java.io.FileNotFoundException;
 
 public class LindaInterpreterFactory {
 
-    public LindaInterpreter createFileInterpreter(LindaClient client, String filePath) throws FileNotFoundException {
+    public LindaInterpreter createFileInterpreter(AdvancedLindaClient client, String filePath) throws FileNotFoundException {
         return new LindaInterpreter(new LindaFileParser(filePath), new LindaExecutor(client, true, true));
     }
 
-    public LindaInterpreter createStringInterpreter(LindaClient client, String text) {
+    public LindaInterpreter createStringInterpreter(AdvancedLindaClient client, String text) {
         return new LindaInterpreter(new LindaStringParser(text), new LindaExecutor(client, true, true));
     }
 

@@ -1,6 +1,7 @@
 package linda.server.interpreter;
 
 import linda.Tuple;
+import linda.server.AdvancedLindaClient;
 import linda.server.LindaClient;
 import linda.server.interpreter.commands.LindaBasicCommand;
 import linda.server.interpreter.commands.LindaEventRegisterCommand;
@@ -10,13 +11,13 @@ import java.util.List;
 
 public class LindaExecutor {
 
-    private LindaClient client;
+    private AdvancedLindaClient client;
 
     private boolean trace;
 
     private boolean timeEval;
 
-    public LindaExecutor(LindaClient client, boolean trace, boolean timeEval) {
+    public LindaExecutor(AdvancedLindaClient client, boolean trace, boolean timeEval) {
         this.client = client;
         this.trace = trace;
         this.timeEval = timeEval;
@@ -27,6 +28,28 @@ public class LindaExecutor {
             this.execute((LindaBasicCommand) command);
         } else if(command instanceof LindaEventRegisterCommand) {
             this.execute((LindaEventRegisterCommand) command);
+        } else if(command.getOperation().equals(LindaOperation.DEBUG)){
+            int availableProcessors = client.getAvailableProcessors();
+            List<Tuple> tuples = client.getTuples();
+            int tuplesNumber = client.getTuplesNumber();
+            long tupleSpaceSize = client.getTupleSpaceSize();
+
+            System.out.println("Available Processors : " + availableProcessors);
+            System.out.println("Tuples : " + tuples);
+            System.out.println("Tuples number : " + tuplesNumber);
+            System.out.println("TupleSpace size : " + tupleSpaceSize);
+
+        } else if(command.getOperation().equals(LindaOperation.MEMORY)){
+            long freeMemory = client.getFreeMemory();
+            long inUseMemory = client.getInUseMemory();
+            long totalMemory = client.getTotalMemory();
+            long maxMemory = client.getMaxMemory();
+
+            System.out.println("Free Memory : " + freeMemory);
+            System.out.println("In Use Memory : " + inUseMemory);
+            System.out.println("Total Memory : " + totalMemory);
+            System.out.println("Max Memory : " + maxMemory);
+
         } else {
             throw new RuntimeException("Unhandled command " + command.getClass());
         }
