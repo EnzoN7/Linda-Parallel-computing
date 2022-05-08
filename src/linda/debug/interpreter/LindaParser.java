@@ -1,10 +1,10 @@
-package linda.server.interpreter;
+package linda.debug.interpreter;
 
 import linda.Linda;
 import linda.Tuple;
 import linda.TupleFormatException;
-import linda.server.interpreter.commands.LindaBasicCommand;
-import linda.server.interpreter.commands.LindaEventRegisterCommand;
+import linda.debug.interpreter.commands.LindaBasicCommand;
+import linda.debug.interpreter.commands.LindaEventRegisterCommand;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

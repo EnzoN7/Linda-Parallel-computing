@@ -1,6 +1,4 @@
-package linda.server.interpreter;
-
-import linda.Tuple;
+package linda.debug.interpreter;
 
 public class LindaCommand {
 

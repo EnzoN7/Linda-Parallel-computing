@@ -1,4 +1,4 @@
-package linda.server.interpreter;
+package linda.debug.interpreter;
 
 import java.io.IOException;
 import java.util.List;

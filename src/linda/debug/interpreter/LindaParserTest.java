@@ -1,12 +1,12 @@
-package linda.server.interpreter;
+package linda.debug.interpreter;
 
 import linda.Linda;
 import linda.Tuple;
 import linda.callbacks.HelloCallback;
-import linda.server.interpreter.commands.LindaBasicCommand;
-import linda.server.interpreter.commands.LindaEventRegisterCommand;
-import linda.server.interpreter.parsers.LindaFileParser;
-import linda.server.interpreter.parsers.LindaStringParser;
+import linda.debug.interpreter.commands.LindaBasicCommand;
+import linda.debug.interpreter.commands.LindaEventRegisterCommand;
+import linda.debug.interpreter.parsers.LindaFileParser;
+import linda.debug.interpreter.parsers.LindaStringParser;
 import org.junit.Assert;
 import org.junit.Test;
 

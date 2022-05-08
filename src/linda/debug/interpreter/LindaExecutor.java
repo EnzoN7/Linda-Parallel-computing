@@ -1,23 +1,22 @@
-package linda.server.interpreter;
+package linda.debug.interpreter;
 
 import linda.Tuple;
-import linda.server.AdvancedLindaClient;
-import linda.server.LindaClient;
-import linda.server.interpreter.commands.LindaBasicCommand;
-import linda.server.interpreter.commands.LindaEventRegisterCommand;
+import linda.debug.DebugLindaClient;
+import linda.debug.interpreter.commands.LindaBasicCommand;
+import linda.debug.interpreter.commands.LindaEventRegisterCommand;
 
 import java.util.Collection;
 import java.util.List;
 
 public class LindaExecutor {
 
-    private AdvancedLindaClient client;
+    private DebugLindaClient client;
 
     private boolean trace;
 
     private boolean timeEval;
 
-    public LindaExecutor(AdvancedLindaClient client, boolean trace, boolean timeEval) {
+    public LindaExecutor(DebugLindaClient client, boolean trace, boolean timeEval) {
         this.client = client;
         this.trace = trace;
         this.timeEval = timeEval;
@@ -29,30 +28,37 @@ public class LindaExecutor {
         } else if(command instanceof LindaEventRegisterCommand) {
             this.execute((LindaEventRegisterCommand) command);
         } else if(command.getOperation().equals(LindaOperation.DEBUG)){
-            int availableProcessors = client.getAvailableProcessors();
-            List<Tuple> tuples = client.getTuples();
-            int tuplesNumber = client.getTuplesNumber();
-            long tupleSpaceSize = client.getTupleSpaceSize();
-
-            System.out.println("Available Processors : " + availableProcessors);
-            System.out.println("Tuples : " + tuples);
-            System.out.println("Tuples number : " + tuplesNumber);
-            System.out.println("TupleSpace size : " + tupleSpaceSize);
-
+            runMemory();
         } else if(command.getOperation().equals(LindaOperation.MEMORY)){
-            long freeMemory = client.getFreeMemory();
-            long inUseMemory = client.getInUseMemory();
-            long totalMemory = client.getTotalMemory();
-            long maxMemory = client.getMaxMemory();
-
-            System.out.println("Free Memory : " + freeMemory);
-            System.out.println("In Use Memory : " + inUseMemory);
-            System.out.println("Total Memory : " + totalMemory);
-            System.out.println("Max Memory : " + maxMemory);
-
+            runDebug();
         } else {
             throw new RuntimeException("Unhandled command " + command.getClass());
         }
+    }
+
+    private void runDebug() {
+        long freeMemory = client.getFreeMemory();
+        long inUseMemory = client.getInUseMemory();
+        long totalMemory = client.getTotalMemory();
+        long maxMemory = client.getMaxMemory();
+
+        System.out.println("Free Memory : " + freeMemory);
+        System.out.println("In Use Memory : " + inUseMemory);
+        System.out.println("Total Memory : " + totalMemory);
+        System.out.println("Max Memory : " + maxMemory);
+    }
+
+    private void runMemory() {
+        int availableProcessors = client.getAvailableProcessors();
+        List<Tuple> tuples = client.getTuples();
+        int tuplesNumber = client.getTuplesNumber();
+        long tupleSpaceSize = client.getTupleSpaceSize();
+
+        System.out.println("Available Processors : " + availableProcessors);
+        System.out.println("Tuples : " + tuples);
+        System.out.println("Tuples number : " + tuplesNumber);
+        System.out.println("TupleSpace size : " + tupleSpaceSize);
+
     }
 
     public void execute(LindaBasicCommand command) {

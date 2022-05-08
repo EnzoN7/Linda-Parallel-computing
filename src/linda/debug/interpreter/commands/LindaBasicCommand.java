@@ -1,8 +1,8 @@
-package linda.server.interpreter.commands;
+package linda.debug.interpreter.commands;
 
 import linda.Tuple;
-import linda.server.interpreter.LindaCommand;
-import linda.server.interpreter.LindaOperation;
+import linda.debug.interpreter.LindaCommand;
+import linda.debug.interpreter.LindaOperation;
 
 public class LindaBasicCommand extends LindaCommand {
     protected Tuple tuple;

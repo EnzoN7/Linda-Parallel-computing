@@ -1,7 +1,7 @@
-package linda.server.interpreter.parsers;
+package linda.debug.interpreter.parsers;
 
-import linda.server.interpreter.LindaCommand;
-import linda.server.interpreter.LindaParser;
+import linda.debug.interpreter.LindaCommand;
+import linda.debug.interpreter.LindaParser;
 
 import java.util.Optional;
 import java.util.Scanner;

@@ -1,10 +1,9 @@
-package linda.server;
+package linda.debug;
 
 import linda.Tuple;
-import linda.debug.DebugLinda;
-import linda.debug.DebugRemoteLinda;
-import linda.server.interpreter.LindaInterpreter;
-import linda.server.interpreter.LindaInterpreterFactory;
+import linda.debug.interpreter.LindaInterpreter;
+import linda.debug.interpreter.LindaInterpreterFactory;
+import linda.server.LindaClient;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,7 +11,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Scanner;
 
-public class AdvancedLindaClient extends LindaClient implements DebugLinda {
+public class DebugLindaClient extends LindaClient implements DebugLinda {
 
     protected String filePath;
 
@@ -20,7 +19,7 @@ public class AdvancedLindaClient extends LindaClient implements DebugLinda {
 
     private LindaInterpreter interpreter;
 
-    public AdvancedLindaClient(String serverUri) {
+    public DebugLindaClient(String serverUri) {
 
         super(serverUri);
 
@@ -96,7 +95,7 @@ public class AdvancedLindaClient extends LindaClient implements DebugLinda {
 
     public static void main(String[] args) {
 
-        AdvancedLindaClient client = new AdvancedLindaClient("rmi://localhost:7778/TestRMI");
+        DebugLindaClient client = new DebugLindaClient("rmi://localhost:7778/TestRMI");
 
         String type = args[0];
 

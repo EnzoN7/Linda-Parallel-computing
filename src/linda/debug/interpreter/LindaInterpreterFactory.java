@@ -1,23 +1,22 @@
-package linda.server.interpreter;
+package linda.debug.interpreter;
 
 import linda.Linda;
 import linda.Tuple;
-import linda.server.AdvancedLindaClient;
-import linda.server.LindaClient;
-import linda.server.interpreter.commands.LindaBasicCommand;
-import linda.server.interpreter.commands.LindaEventRegisterCommand;
-import linda.server.interpreter.parsers.LindaFileParser;
-import linda.server.interpreter.parsers.LindaStringParser;
+import linda.debug.DebugLindaClient;
+import linda.debug.interpreter.commands.LindaBasicCommand;
+import linda.debug.interpreter.commands.LindaEventRegisterCommand;
+import linda.debug.interpreter.parsers.LindaFileParser;
+import linda.debug.interpreter.parsers.LindaStringParser;
 
 import java.io.FileNotFoundException;
 
 public class LindaInterpreterFactory {
 
-    public LindaInterpreter createFileInterpreter(AdvancedLindaClient client, String filePath) throws FileNotFoundException {
+    public LindaInterpreter createFileInterpreter(DebugLindaClient client, String filePath) throws FileNotFoundException {
         return new LindaInterpreter(new LindaFileParser(filePath), new LindaExecutor(client, true, true));
     }
 
-    public LindaInterpreter createStringInterpreter(AdvancedLindaClient client, String text) {
+    public LindaInterpreter createStringInterpreter(DebugLindaClient client, String text) {
         return new LindaInterpreter(new LindaStringParser(text), new LindaExecutor(client, true, true));
     }
 
