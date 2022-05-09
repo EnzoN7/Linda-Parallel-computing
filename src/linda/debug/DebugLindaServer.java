@@ -1,8 +1,8 @@
 package linda.debug;
 
 import linda.Tuple;
-import linda.debug.evaluator.LindaEvaluation;
-import linda.debug.evaluator.LindaEvaluator;
+import linda.evaluator.LindaEvaluation;
+import linda.evaluator.LindaEvaluator;
 import linda.server.LindaServer;
 
 import java.rmi.RemoteException;
@@ -19,7 +19,7 @@ public class DebugLindaServer extends LindaServer implements DebugRemoteLinda {
         this.kernel = new DebugCentralizedLinda();
         this.evaluator = new LindaEvaluator();
 
-        this.getDebugKernel().setObserver(this.evaluator);
+        this.getDebugKernel().setEvaluator(this.evaluator);
     }
 
     protected DebugCentralizedLinda getDebugKernel() {

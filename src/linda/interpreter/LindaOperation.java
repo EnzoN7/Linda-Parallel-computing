@@ -1,4 +1,4 @@
-package linda.debug.interpreter;
+package linda.interpreter;
 
 public enum LindaOperation {
     READ,
@@ -10,13 +10,15 @@ public enum LindaOperation {
     TAKE_ALL,
     EVENT_REGISTER,
 
-    DEBUG,
+    SERVER,
 
     MEMORY,
 
     HISTORY,
 
-    STATS;
+    STATS,
+
+    CACHE;
 
 
     public static LindaOperation getFromString(String _operation) {

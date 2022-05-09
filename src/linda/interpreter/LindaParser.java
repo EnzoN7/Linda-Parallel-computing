@@ -1,50 +1,39 @@
-package linda.debug.interpreter;
+package linda.interpreter;
 
 import linda.Linda;
 import linda.Tuple;
 import linda.TupleFormatException;
-import linda.debug.interpreter.commands.LindaBasicCommand;
-import linda.debug.interpreter.commands.LindaEventRegisterCommand;
+import linda.interpreter.commands.*;
+import linda.interpreter.commands.parameters.LindaCacheOperation;
+import linda.interpreter.commands.parameters.LindaHistoryType;
+import linda.interpreter.commands.parameters.LindaStatsOperation;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class LindaParser {
-    protected String filePath;
-
-    private FileReader fileReader;
-
-    private BufferedReader bufferedReader;
 
     private Pattern basicCommandPattern;
     private Pattern eventRegisterCommandPattern;
-
+    private Pattern historyCommandPattern;
     private Pattern debugCommandPattern;
+    private Pattern cacheCommandPattern;
+    private Pattern statsCommandPattern;
 
     public LindaParser() {
 
-        basicCommandPattern = Pattern.compile("(READ|TAKE|WRITE|READ_ALL|TAKE_ALL) (.+)");
-        eventRegisterCommandPattern = Pattern.compile("(EVENT_REGISTER) (READ|TAKE) (IMMEDIATE|FUTURE) (.+) \"(.+)\"");
-        debugCommandPattern = Pattern.compile("(DEBUG|MEMORY|HISTORY|STATS)");
+        basicCommandPattern = Pattern.compile("(READ|TAKE|WRITE|READ_ALL|TAKE_ALL) (.+)", Pattern.CASE_INSENSITIVE);
+        eventRegisterCommandPattern = Pattern.compile("(EVENT_REGISTER) (READ|TAKE) (IMMEDIATE|FUTURE) (.+) \"(.+)\"", Pattern.CASE_INSENSITIVE);
+        debugCommandPattern = Pattern.compile("(SERVER|MEMORY)", Pattern.CASE_INSENSITIVE);
+        historyCommandPattern = Pattern.compile("(HISTORY) (LOCAL|REMOTE)", Pattern.CASE_INSENSITIVE);
+        cacheCommandPattern = Pattern.compile("(CACHE) (PRINT|CLEAR|SIZE)", Pattern.CASE_INSENSITIVE);
+        statsCommandPattern = Pattern.compile("(STATS) (CACHE)", Pattern.CASE_INSENSITIVE);
     }
 
-    public List<LindaCommand> parse() throws IOException {
-        String _command = null;
-
-        List<LindaCommand> commands = new ArrayList<>();
-
-        while( (_command = bufferedReader.readLine()) != null) {
-            commands.add( this.parseCommand(_command) );
-        }
-
-        return commands;
-    }
+    public abstract  List<LindaCommand> parse() throws  IOException;
 
     public abstract Optional<LindaCommand> next() throws Exception;
 
@@ -52,6 +41,10 @@ public abstract class LindaParser {
         Matcher basicCommandMatcher = basicCommandPattern.matcher(_command);
         Matcher eventRegisterCommandMatcher = eventRegisterCommandPattern.matcher(_command);
         Matcher debugCommandMatcher = debugCommandPattern.matcher(_command);
+        Matcher historyCommandMatcher = historyCommandPattern.matcher(_command);
+        Matcher cacheCommandMatcher = cacheCommandPattern.matcher(_command);
+        Matcher statsCommandMatcher = statsCommandPattern.matcher(_command);
+
         if(basicCommandMatcher.matches()) {
             String _operation = basicCommandMatcher.group(1);
 
@@ -86,8 +79,65 @@ public abstract class LindaParser {
 
             return new LindaCommand(operation);
         }
+        else if(historyCommandMatcher.matches()) {
+            String _operation = historyCommandMatcher.group(1);
+            String _which = historyCommandMatcher.group(2);
+
+            LindaOperation operation = this.parseOperation(_operation);
+            LindaHistoryType type = this.parseHistoryType(_which);
+
+            return new LindaHistoryCommand(operation, type);
+        }
+        else if(cacheCommandMatcher.matches()) {
+            String _operation = cacheCommandMatcher.group(1);
+            String _what = cacheCommandMatcher.group(2);
+
+            LindaOperation operation = this.parseOperation(_operation);
+            LindaCacheOperation subOperation = this.parseCacheOp(_what);
+
+            return new LindaCacheCommand(operation, subOperation);
+        }
+        else if(statsCommandMatcher.matches()) {
+            String _operation = statsCommandMatcher.group(1);
+            String _what = statsCommandMatcher.group(2);
+
+            LindaOperation operation = this.parseOperation(_operation);
+            LindaStatsOperation subOperation = this.parseStatsOp(_what);
+
+            return new LindaStatsCommand(operation, subOperation);
+        }
         else {
-            throw new RuntimeException("Error parsing command " + _command);
+            throw new RuntimeException("Error parsing command " + _command + ", instruction mismatch.");
+        }
+    }
+
+    protected LindaStatsOperation parseStatsOp(String what) {
+        if(what.equalsIgnoreCase("CACHE")) {
+            return LindaStatsOperation.CACHE;
+        } else {
+            throw new RuntimeException("Unhandled stats type : "  + what);
+        }
+    }
+
+    protected LindaCacheOperation parseCacheOp(String what) {
+        if(what.equalsIgnoreCase("PRINT")) {
+            return LindaCacheOperation.PRINT;
+        } else if(what.equalsIgnoreCase("CLEAR")) {
+            return LindaCacheOperation.CLEAR;        }
+        else if(what.equalsIgnoreCase("SIZE")) {
+            return LindaCacheOperation.SIZE;
+        } else {
+            throw new RuntimeException("Unhandled cache type : "  + what);
+        }
+    }
+
+    protected LindaHistoryType parseHistoryType(String which) {
+        if(which.equalsIgnoreCase("LOCAL")) {
+            return LindaHistoryType.LOCAL;
+        } else if(which.equalsIgnoreCase("REMOTE")) {
+            return LindaHistoryType.REMOTE;
+        } else {
+            throw new RuntimeException("Unhandled history type : "  + which);
         }
     }
 

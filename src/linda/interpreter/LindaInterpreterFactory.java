@@ -1,13 +1,13 @@
-package linda.debug.interpreter;
+package linda.interpreter;
 
 import linda.Linda;
 import linda.Tuple;
 import linda.debug.DebugLindaClient;
-import linda.debug.evaluator.LindaEvaluator;
-import linda.debug.interpreter.commands.LindaBasicCommand;
-import linda.debug.interpreter.commands.LindaEventRegisterCommand;
-import linda.debug.interpreter.parsers.LindaFileParser;
-import linda.debug.interpreter.parsers.LindaStringParser;
+import linda.evaluator.LindaEvaluator;
+import linda.interpreter.commands.LindaBasicCommand;
+import linda.interpreter.commands.LindaEventRegisterCommand;
+import linda.interpreter.parsers.LindaFileParser;
+import linda.interpreter.parsers.LindaStringParser;
 
 import java.io.FileNotFoundException;
 

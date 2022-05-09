@@ -1,13 +1,15 @@
-package linda.debug.evaluator;
+package linda.evaluator;
 
 import linda.Tuple;
-import linda.debug.interpreter.LindaOperation;
+import linda.LindaObserver;
+import linda.interpreter.LindaOperation;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
-public class LindaEvaluator implements  LindaObserver {
+public class LindaEvaluator implements LindaObserver {
 
     private Map<UUID, LindaEvaluation> requestEvaluations;
 
@@ -47,18 +49,29 @@ public class LindaEvaluator implements  LindaObserver {
         }
     }
 
+    public void setFromCache(UUID requestId) {
+        if(requestEvaluations.containsKey(requestId)) {
+            LindaEvaluation evaluation = requestEvaluations.get(requestId);
+
+            evaluation.fromCache = true;
+        } else {
+            throw new RuntimeException("Cannot set from cache a request that doesn't exists");
+        }
+    }
+
     @Override
     public Map<UUID, LindaEvaluation> getHistory() {
         return requestEvaluations;
     }
 
     @Override
-    public void onReadStart(UUID requestId, Tuple t) {
+    public Optional<Tuple> onReadStart(UUID requestId, Tuple t) {
         addRequest(requestId, LindaOperation.READ, t);
+        return Optional.of(t);
     }
 
     @Override
-    public void onReadEnd(UUID requestId, Tuple t) {
+    public void onReadEnd(UUID requestId, Tuple t, Tuple result) {
         long duration = evalRequest(requestId);
 
         System.out.println("[Performance] Reading " + t + " tooks " + duration + " ms.");
@@ -70,7 +83,7 @@ public class LindaEvaluator implements  LindaObserver {
     }
 
     @Override
-    public void onTakeEnd(UUID requestId, Tuple t) {
+    public void onTakeEnd(UUID requestId, Tuple t, Tuple result) {
         long duration = evalRequest(requestId);
 
         System.out.println("[Performance] Taking " + t + " tooks " + duration + " ms.");

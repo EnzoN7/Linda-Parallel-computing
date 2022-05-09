@@ -1,9 +1,10 @@
 package linda.debug;
 
+import linda.LindaObservable;
 import linda.Tuple;
-import linda.debug.evaluator.LindaEvaluation;
-import linda.debug.evaluator.LindaObservable;
-import linda.debug.evaluator.LindaObserver;
+import linda.cache.LindaCacheObserver;
+import linda.evaluator.LindaEvaluation;
+import linda.evaluator.LindaEvaluator;
 import linda.shm.CentralizedLinda;
 
 import java.util.List;
@@ -12,24 +13,34 @@ import java.util.UUID;
 
 public class DebugCentralizedLinda extends CentralizedLinda implements DebugLinda, LindaObservable {
 
-    LindaObserver mainObserver;
+    private LindaEvaluator evaluator;
+
+    private LindaCacheObserver cacheObserver;
 
     @Override
     public void write(Tuple t) {
         UUID reqId = UUID.randomUUID();
 
-        if(this.isObserved()) mainObserver.onWriteStart(reqId, t);
+        if(this.isEvaluated()) evaluator.onWriteStart(reqId, t);
         super.write(t);
-        if(this.isObserved()) mainObserver.onWriteEnd(reqId, t);
+        if(this.isEvaluated()) evaluator.onWriteEnd(reqId, t);
     }
 
     @Override
     public Tuple read(Tuple t) {
         UUID reqId = UUID.randomUUID();
 
-        if(this.isObserved()) mainObserver.onReadStart(reqId, t);
+        if(this.isEvaluated()) evaluator.onReadStart(reqId, t);
+        /*if(this.isObservedByCacheObserver()) {
+            Optional<Tuple> _tuple = cacheObserver.onReadStart(reqId, t);
+            if(_tuple.isPresent()) {
+                System.out.println("FROM CACHE");
+                evaluator.setFromCache(reqId);
+                return _tuple.get();
+            }
+        }*/
         var result = super.read(t);
-        if(this.isObserved()) mainObserver.onReadEnd(reqId, t);
+        if(this.isEvaluated()) evaluator.onReadEnd(reqId, t, result);
 
         return result;
     }
@@ -38,9 +49,9 @@ public class DebugCentralizedLinda extends CentralizedLinda implements DebugLind
     public Tuple take(Tuple t) {
         UUID reqId = UUID.randomUUID();
 
-        if(this.isObserved()) mainObserver.onTakeStart(reqId, t);
+        if(this.isEvaluated()) evaluator.onTakeStart(reqId, t);
         var result = super.take(t);
-        if(this.isObserved()) mainObserver.onTakeEnd(reqId, t);
+        if(this.isEvaluated()) evaluator.onTakeEnd(reqId, t, result);
 
         return result;
     }
@@ -87,7 +98,7 @@ public class DebugCentralizedLinda extends CentralizedLinda implements DebugLind
 
     @Override
     public Map<UUID, LindaEvaluation> getHistory() {
-        return this.mainObserver.getHistory();
+        return this.evaluator.getHistory();
     }
 
     static public int getTupleSize(Tuple tuple) {
@@ -101,17 +112,33 @@ public class DebugCentralizedLinda extends CentralizedLinda implements DebugLind
     }
 
     @Override
-    public void setObserver(LindaObserver observer) {
-        mainObserver = observer;
+    public void setEvaluator(LindaEvaluator observer) {
+        evaluator = observer;
     }
 
     @Override
-    public void unsetObserver() {
-        mainObserver = null;
+    public void unsetEvaluator() {
+        evaluator = null;
     }
 
     @Override
-    public boolean isObserved() {
-        return mainObserver != null;
+    public boolean isEvaluated() {
+        return evaluator != null;
+    }
+
+
+    @Override
+    public void setCacheObserver(LindaCacheObserver observer) {
+        cacheObserver = observer;
+    }
+
+    @Override
+    public void unsetCacheObserver() {
+        cacheObserver = null;
+    }
+
+    @Override
+    public boolean isObservedByCacheObserver() {
+        return cacheObserver != null;
     }
 }

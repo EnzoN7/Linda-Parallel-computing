@@ -1,20 +1,21 @@
 package linda.debug;
 
+import linda.LindaObservable;
 import linda.Tuple;
-import linda.debug.evaluator.LindaEvaluation;
-import linda.debug.interpreter.LindaInterpreter;
-import linda.debug.interpreter.LindaInterpreterFactory;
+import linda.cache.LRULindaCache;
+import linda.cache.LindaCacheObserver;
+import linda.evaluator.LindaEvaluation;
+import linda.evaluator.LindaEvaluator;
+import linda.interpreter.LindaInterpreter;
+import linda.interpreter.LindaInterpreterFactory;
 import linda.server.LindaClient;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
-public class DebugLindaClient extends LindaClient implements DebugLinda {
+public class DebugLindaClient extends LindaClient implements DebugLinda, LindaObservable {
 
     protected String filePath;
 
@@ -22,12 +23,62 @@ public class DebugLindaClient extends LindaClient implements DebugLinda {
 
     private LindaInterpreter interpreter;
 
+    private LindaCacheObserver cacheObserver;
+
+    private LindaEvaluator evaluator;
+
+    public static final int CacheCapacity = 10;
+
     public DebugLindaClient(String serverUri) {
 
         super(serverUri);
 
         factory = new LindaInterpreterFactory();
+        cacheObserver = new LindaCacheObserver(new LRULindaCache(CacheCapacity), this);
+        evaluator = new LindaEvaluator();
+    }
 
+    @Override
+    public Tuple read(Tuple t) {
+        UUID reqId = UUID.randomUUID();
+
+        if(isEvaluated()) evaluator.onReadStart(reqId, t);
+
+        if(isObservedByCacheObserver()) {
+            Optional<Tuple> _tuple = cacheObserver.onReadStart(reqId, t);
+            if (_tuple.isPresent()) {
+                evaluator.setFromCache(reqId);
+
+                Tuple result = _tuple.get();
+
+                cacheObserver.onReadEnd(reqId, t, result);
+
+                if(isEvaluated()) {
+                    evaluator.onReadEnd(reqId, t, result);
+                }
+
+                System.out.println("Reading from cache..");
+                return result;
+            }
+        }
+
+        Tuple result = super.read(t);
+
+        if(isObservedByCacheObserver()) cacheObserver.onReadEnd(reqId, t, result);
+        if(isEvaluated()) evaluator.onReadEnd(reqId, t, result);
+
+        return result;
+    }
+
+    @Override
+    public Tuple take(Tuple t) {
+        UUID reqId = UUID.randomUUID();
+
+        //if(isObservedByCacheObserver()) cacheObserver.onTakeStart(reqId, t);
+        Tuple result = super.take(t);
+        if(isObservedByCacheObserver()) cacheObserver.onTakeEnd(reqId, t, result);
+
+        return result;
     }
 
     protected void interpretFile(String filePath) {
@@ -77,10 +128,13 @@ public class DebugLindaClient extends LindaClient implements DebugLinda {
             } else if(input.equals(";")) {
                 this.runAll();
             } else if(input.equals("?")) {
+                scanner.close();
                 System.out.println("Linda Interpreter : END");
                 return;
             }
         }
+
+        scanner.close();
     }
 
     public void readUserCmds() {
@@ -96,40 +150,44 @@ public class DebugLindaClient extends LindaClient implements DebugLinda {
         }
     }
 
-    public static void main(String[] args) {
 
-        DebugLindaClient client = new DebugLindaClient("rmi://localhost:7778/TestRMI");
-
+    public void runInterpreter(String[] args) {
         String type = args[0];
 
         // interprete file
         if(type.equals("-f")) {
             String filePath = args[1];
 
-            client.interpretFile(filePath);
+            this.interpretFile(filePath);
 
             // read all or one by one?
-            client.printRunOptions();
+            this.printRunOptions();
 
-            client.readUserInputs();
+            this.readUserInputs();
         }
 
         // interprete string
         else if(type.equals("-s")) {
             String text = args[1];
 
-            client.interpretText(text);
+            this.interpretText(text);
 
             // read all or one by one?
-            client.printRunOptions();
+            this.printRunOptions();
 
-            client.readUserInputs();
+            this.readUserInputs();
 
         } else if (type.equals("-i")) {
             System.out.println("Enter a command..");
 
-            client.readUserCmds();
+            this.readUserCmds();
         }
+    }
+
+    public static void main(String[] args) {
+        DebugLindaClient client = new DebugLindaClient("rmi://localhost:7778/TestRMI");
+
+        client.runInterpreter(args);
     }
 
     protected DebugRemoteLinda getDebugRemoteLinda() {
@@ -215,5 +273,47 @@ public class DebugLindaClient extends LindaClient implements DebugLinda {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Map<UUID, LindaEvaluation> getLocalHistory() {
+        return this.evaluator.getHistory();
+    }
+
+    @Override
+    public void setEvaluator(LindaEvaluator observer) {
+        this.evaluator = observer;
+    }
+
+    @Override
+    public void unsetEvaluator() {
+        this.evaluator = null;
+    }
+
+    @Override
+    public boolean isEvaluated() {
+        return this.evaluator != null;
+    }
+
+    @Override
+    public void setCacheObserver(LindaCacheObserver observer) {
+        this.cacheObserver = observer;
+    }
+
+    @Override
+    public void unsetCacheObserver() {
+        this.cacheObserver = null;
+    }
+
+    @Override
+    public boolean isObservedByCacheObserver() {
+        return this.cacheObserver != null;
+    }
+
+    public Map<Tuple, Deque<Tuple>> getCache() {
+        return this.cacheObserver.getCache();
+    }
+
+    public void clearCache() {
+        this.cacheObserver.clearCache();
     }
 }

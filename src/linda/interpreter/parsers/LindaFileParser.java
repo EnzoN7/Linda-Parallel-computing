@@ -1,9 +1,11 @@
-package linda.debug.interpreter.parsers;
+package linda.interpreter.parsers;
 
-import linda.debug.interpreter.LindaCommand;
-import linda.debug.interpreter.LindaParser;
+import linda.interpreter.LindaCommand;
+import linda.interpreter.LindaParser;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class LindaFileParser extends LindaParser {
@@ -21,6 +23,19 @@ public class LindaFileParser extends LindaParser {
 
         fileReader = new FileReader(filePath);
         bufferedReader = new BufferedReader(fileReader);
+    }
+
+    @Override
+    public List<LindaCommand> parse() throws IOException {
+        String _command;
+
+        List<LindaCommand> commands = new ArrayList<>();
+
+        while( (_command = bufferedReader.readLine()) != null) {
+            commands.add( this.parseCommand(_command) );
+        }
+
+        return commands;
     }
 
     @Override

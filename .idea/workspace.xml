@@ -1,14 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d2af85f6-e176-4e96-a8e0-6153d377ce6c" name="Changes" comment="" />
+    <list default="true" id="d2af85f6-e176-4e96-a8e0-6153d377ce6c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/scripts/cache-time-eval.linda" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/linda/LindaObservable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/linda/LindaObserver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/linda/cache/LindaCacheObserver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/linda/interpreter/commands/LindaCacheCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/linda/interpreter/commands/LindaHistoryCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/linda/interpreter/commands/LindaStatsCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/linda/interpreter/commands/parameters/LindaCacheOperation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/linda/interpreter/commands/parameters/LindaHistoryType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/linda/interpreter/commands/parameters/LindaStatsOperation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Linda.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Linda.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/cache/ILindaCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/cache/ILindaCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/cache/LRULindaCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/cache/LRULindaCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/DebugCentralizedLinda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/debug/DebugCentralizedLinda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/DebugLinda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/debug/DebugLinda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/DebugLindaClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/debug/DebugLindaClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/DebugLindaServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/debug/DebugLindaServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/DebugRemoteLinda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/debug/DebugRemoteLinda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/evaluator/LindaEvaluation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/evaluator/LindaEvaluation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/evaluator/LindaEvaluator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/evaluator/LindaEvaluator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/evaluator/LindaObservable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/evaluator/LindaObserver.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/interpreter/LindaCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/interpreter/LindaCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/interpreter/LindaExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/interpreter/LindaExecutor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/interpreter/LindaInterpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/interpreter/LindaInterpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/interpreter/LindaInterpreterFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/interpreter/LindaInterpreterFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/interpreter/LindaOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/interpreter/LindaOperation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/interpreter/LindaParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/interpreter/LindaParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/interpreter/LindaParserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/interpreter/LindaParserTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/interpreter/commands/LindaBasicCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/interpreter/commands/LindaBasicCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/interpreter/commands/LindaEventRegisterCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/interpreter/commands/LindaEventRegisterCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/interpreter/parsers/LindaFileParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/interpreter/parsers/LindaFileParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/debug/interpreter/parsers/LindaStringParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/interpreter/parsers/LindaStringParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/server/LindaClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/server/LindaClient.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -19,27 +66,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="Downloaded.Files.Path.Enabled" value="false" />
-    <property name="Repository.Attach.Annotations" value="false" />
-    <property name="Repository.Attach.JavaDocs" value="false" />
-    <property name="Repository.Attach.Sources" value="false" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
+  }
+}]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="linda.interpreter" />
+      <recent name="linda.server.interpreter.commands" />
+      <recent name="linda.server.file" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\alex3\Documents\Repositories\SchoolProjects\Linda\src" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="linda.server.interpreter" />
+    </key>
   </component>
-  <component name="RunManager">
-    <configuration name="BasicTest1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="linda.test.BasicTest1" />
+  <component name="RunManager" selected="Application.AdvancedLindaClient -f &quot;cache-time-eval&quot;">
+    <configuration name="AdvancedLindaClient -f &quot;cache-time-eval&quot;" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="linda.debug.DebugLindaClient" />
       <module name="Linda" />
+      <option name="PROGRAM_PARAMETERS" value="-f &quot;./scripts/cache-time-eval.linda&quot;" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="linda.test.*" />
+          <option name="PATTERN" value="linda.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -47,9 +109,133 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="AdvancedLindaClient -i (2)" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="linda.debug.DebugLindaClient" />
+      <module name="Linda" />
+      <option name="PROGRAM_PARAMETERS" value="-i" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AdvancedLindaClient -i" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="linda.debug.DebugLindaClient" />
+      <module name="Linda" />
+      <option name="PROGRAM_PARAMETERS" value="-i" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AdvancedLindaClient -s" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="linda.debug.DebugLindaClient" />
+      <module name="Linda" />
+      <option name="PROGRAM_PARAMETERS" value="-s &quot;WRITE [ 1000 ]&quot;" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="linda.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DebugLindaServer" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="linda.debug.DebugLindaServer" />
+      <module name="Linda" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LindaClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="linda.server.LindaClient" />
+      <module name="Linda" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="linda.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LindaServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="linda.server.LindaServer" />
+      <module name="Linda" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="linda.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LindaCacheTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Linda" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="linda.interpreter.commands.parameters.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="linda.cache" />
+      <option name="MAIN_CLASS_NAME" value="linda.cache.LindaCacheTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LindaParserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Linda" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="linda.interpreter.parsers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="linda.server.interpreter" />
+      <option name="MAIN_CLASS_NAME" value="linda.interpreter.LindaParserTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TupleSpaceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Linda" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="linda.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="linda.shm" />
+      <option name="MAIN_CLASS_NAME" value="linda.shm.TupleSpaceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.DebugLindaServer" />
+      <item itemvalue="Application.AdvancedLindaClient -s" />
+      <item itemvalue="Application.AdvancedLindaClient -f &quot;cache-time-eval&quot;" />
+      <item itemvalue="Application.AdvancedLindaClient -i" />
+      <item itemvalue="Application.AdvancedLindaClient -i (2)" />
+      <item itemvalue="Application.linda.server.LindaClient" />
+      <item itemvalue="Application.linda.server.LindaServer" />
+      <item itemvalue="JUnit.LindaCacheTest" />
+      <item itemvalue="JUnit.LindaParserTest" />
+      <item itemvalue="JUnit.TupleSpaceTest" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.BasicTest1" />
+        <item itemvalue="JUnit.LindaCacheTest" />
+        <item itemvalue="Application.linda.server.LindaServer" />
+        <item itemvalue="JUnit.LindaParserTest" />
+        <item itemvalue="Application.linda.server.LindaClient" />
+        <item itemvalue="JUnit.TupleSpaceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -63,5 +249,43 @@
       <updated>1645554778234</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="eval" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="18" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/linda/debug/DebugCentralizedLinda.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

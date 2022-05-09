@@ -2,8 +2,7 @@ package linda.debug;
 
 import linda.Linda;
 import linda.Tuple;
-import linda.debug.evaluator.LindaEvaluation;
-import linda.debug.evaluator.LindaEvaluator;
+import linda.evaluator.LindaEvaluation;
 
 import java.util.List;
 import java.util.Map;

@@ -1,7 +1,7 @@
-package linda.debug.evaluator;
+package linda.evaluator;
 
 import linda.Tuple;
-import linda.debug.interpreter.LindaOperation;
+import linda.interpreter.LindaOperation;
 
 import java.io.Serializable;
 
@@ -16,4 +16,6 @@ public class LindaEvaluation implements Serializable {
     public Long duration;
 
     public Tuple tuple;
+
+    public boolean fromCache;
 }

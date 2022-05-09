@@ -1,10 +1,10 @@
-package linda.debug.interpreter.commands;
+package linda.interpreter.commands;
 
 import linda.Callback;
 import linda.Linda;
 import linda.Tuple;
-import linda.debug.interpreter.LindaCommand;
-import linda.debug.interpreter.LindaOperation;
+import linda.interpreter.LindaCommand;
+import linda.interpreter.LindaOperation;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

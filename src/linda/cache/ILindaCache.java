@@ -2,7 +2,7 @@ package linda.cache;
 
 import linda.Tuple;
 
-import java.util.Optional;
+import java.util.*;
 
 //
 public interface ILindaCache {
@@ -40,4 +40,10 @@ public interface ILindaCache {
      * Clear the cache by removing all elements
      */
     void clear();
+
+    void removeOne(Tuple key);
+
+    void removeAll(Tuple key);
+
+    Map<Tuple, Deque<Tuple>> getMap();
 }

@@ -1,4 +1,4 @@
-package linda.debug.interpreter;
+package linda.interpreter;
 
 public class LindaCommand {
 

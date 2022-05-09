@@ -1,7 +1,7 @@
 package linda.debug;
 
 import linda.Tuple;
-import linda.debug.evaluator.LindaEvaluation;
+import linda.evaluator.LindaEvaluation;
 import linda.server.RemoteLinda;
 
 import java.rmi.RemoteException;

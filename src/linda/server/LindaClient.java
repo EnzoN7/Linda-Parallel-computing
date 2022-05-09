@@ -69,7 +69,7 @@ public class LindaClient implements Linda {
 
 	@Override
 	public Tuple take(Tuple template) {
-		Future<Tuple> tuple = executor.submit(new Callable<Tuple>() {
+		/*Future<Tuple> tuple = executor.submit(new Callable<Tuple>() {
 			@Override
 			public Tuple call() {
 				try {	
@@ -93,8 +93,14 @@ public class LindaClient implements Linda {
 		} catch (ExecutionException e) {
 	
 			e.printStackTrace();
+		}*/
+
+		try {
+			return remoteLinda.take(template);
+		} catch (RemoteException e) {
+			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
 

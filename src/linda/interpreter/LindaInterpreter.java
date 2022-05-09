@@ -1,6 +1,6 @@
-package linda.debug.interpreter;
+package linda.interpreter;
 
-import linda.debug.evaluator.LindaEvaluator;
+import linda.evaluator.LindaEvaluator;
 
 import java.io.IOException;
 import java.util.List;
