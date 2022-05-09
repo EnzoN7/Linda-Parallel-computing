@@ -89,7 +89,7 @@ public class DebugCentralizedLinda extends CentralizedLinda implements DebugLind
     public Map<UUID, LindaEvaluation> getHistory() {
         return this.mainObserver.getHistory();
     }
-    
+
     static public int getTupleSize(Tuple tuple) {
         int size = 0;
 
