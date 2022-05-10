@@ -1,12 +1,10 @@
-package linda.server;
+package linda.multiserver;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Collection;
 
-import linda.Linda;
 import linda.Tuple;
-import linda.Callback;
 import linda.Linda.eventMode;
 import linda.Linda.eventTiming;
 

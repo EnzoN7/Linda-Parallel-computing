@@ -2,13 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d2af85f6-e176-4e96-a8e0-6153d377ce6c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/linda/server/GateKeeper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/server/GateKeeper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/linda/server/LindaClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/server/LindaClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/linda/server/LindaServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/server/LindaServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/linda/server/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/server/Manager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/linda/shm/CentralizedLinda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/shm/CentralizedLinda.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/linda/test/TestClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/test/TestClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/server/GateKeeper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/multiserver/GateKeeper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/server/LindaClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/multiserver/LindaClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/server/LindaServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/multiserver/LindaServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/server/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/multiserver/Manager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/server/RemoteCallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/multiserver/RemoteCallback.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/server/RemoteCallbackObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/multiserver/RemoteCallbackObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/server/RemoteGateKeeper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/multiserver/RemoteGateKeeper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/server/RemoteLinda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/multiserver/RemoteLinda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/test/TestClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/multiserver/TestClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linda/whiteboard/Whiteboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linda/whiteboard/Whiteboard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +29,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -59,7 +64,7 @@
       <module name="Linda" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="linda.test.*" />
+          <option name="PATTERN" value="linda.multiserver.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -68,11 +73,11 @@
       </method>
     </configuration>
     <configuration name="TestClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="linda.test.TestClient" />
+      <option name="MAIN_CLASS_NAME" value="linda.multiserver.TestClient" />
       <module name="Linda" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="linda.test.*" />
+          <option name="PATTERN" value="linda.multiserver.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>

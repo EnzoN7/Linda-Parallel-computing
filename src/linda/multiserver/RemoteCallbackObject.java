@@ -1,9 +1,7 @@
-package linda.server;
+package linda.multiserver;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-
-import linda.Tuple;
 
 public abstract class RemoteCallbackObject extends UnicastRemoteObject implements RemoteCallback {
 

@@ -1,20 +1,20 @@
-package linda.server;
+package linda.multiserver;
 
 import linda.Tuple;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Manager  {
 
     private int partitions = 10; // Default value of partitions is set to "10"
     private GateKeeper gateKeeper;
+    private HashMap<Tuple,String> waitList = new HashMap<>();
     Registry registry;
 
     public Manager() {
@@ -88,6 +88,24 @@ public class Manager  {
         }
 
         return result;
+    }
+
+    public void register(Tuple t, String method) {
+        this.waitList.put(t, method);
+        System.out.println("Tuple " + t + " is registered");
+    }
+
+    public void noticeOn(Tuple t) {
+        if (waitList.containsKey(t)) {
+            String method = waitList.get(t);
+            waitList.remove(t);
+            System.out.println("Tuple " + t + " has been noticed");
+            try {
+                this.redistribute(0,method,t);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void startUp() {

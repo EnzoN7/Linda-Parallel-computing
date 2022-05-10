@@ -1,4 +1,4 @@
-package linda.server;
+package linda.multiserver;
 
 import linda.Callback;
 import linda.Tuple;
@@ -6,14 +6,7 @@ import linda.Linda.eventMode;
 import linda.Linda.eventTiming;
 import linda.shm.CentralizedLinda;
 
-import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.UnknownHostException;
-import java.rmi.AlreadyBoundException;
-import java.rmi.Naming;
-import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Collection;
 
@@ -47,34 +40,41 @@ public class LindaServer extends UnicastRemoteObject implements RemoteLinda  {
 	
 	@Override
 	public Tuple read(Tuple template) throws RemoteException {
-		Tuple result = kernel.read(template);
+		Tuple result = kernel.tryRead(template);
 		if (result == null) {
 			result = (Tuple) this.manager.redistribute(this.serverAdd, "readNoRedirect", template);
+		}
+		if (result == null) {
+			this.manager.register(template,"readNoRedirect");
 		}
 		return result;
 	}
 
 	public Tuple readNoRedirect(Tuple template) throws RemoteException {
-		return kernel.read(template);
+		return kernel.tryRead(template);
 	}
 	
 	@Override
 	public Tuple take(Tuple template) throws RemoteException {
-		Tuple result = kernel.take(template);
+		Tuple result = kernel.tryTake(template);
 		if (result == null) {
 			result = (Tuple) this.manager.redistribute(this.serverAdd, "takeNoRedirect", template);
+		}
+		if (result == null) {
+			this.manager.register(template,"takeNoRedirect");
 		}
 		return result;
 	}
 
 	public Tuple takeNoRedirect(Tuple template) throws RemoteException {
-		return kernel.take(template);
+		return kernel.tryTake(template);
 	}
 	
 	@Override
 	public void write(Tuple t) throws RemoteException {
 		System.out.println("Writing " + t + " to server: "  + this.serverAdd);
 		kernel.write(t);
+		this.manager.noticeOn(t);
 	}
 	
 	@Override

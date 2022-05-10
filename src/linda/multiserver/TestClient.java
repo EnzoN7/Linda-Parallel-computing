@@ -1,17 +1,10 @@
-package linda.test;
+package linda.multiserver;
 
 import java.rmi.RemoteException;
-import java.util.Collection;
 
-import linda.Callback;
-import linda.Linda;
 import linda.Tuple;
-import linda.Linda.eventMode;
-import linda.Linda.eventTiming;
-import linda.server.LindaClient;
-import linda.server.LindaServer;
-import linda.server.Manager;
-import linda.server.RemoteCallback;
+import linda.multiserver.LindaClient;
+import linda.multiserver.Manager;
 
 public class TestClient {
 
@@ -46,11 +39,12 @@ public class TestClient {
 				LindaClient linda = new LindaClient("rmi://localhost:7778/Linda");
 
 				linda.write(new Tuple(2,'c'));
-				Tuple result = linda.tryRead(new Tuple(2,'b'));
+				Tuple result = linda.read(new Tuple(2,'b'));
 				System.out.println("read worked : " + result);
 
-
+				linda.read(new Tuple(2,'l'));
 				System.out.println("Fin du client");
+				linda.write(new Tuple(2,'l'));
 			}
 		}).start();
 	}	

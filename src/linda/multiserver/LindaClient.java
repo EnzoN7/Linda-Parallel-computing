@@ -1,27 +1,14 @@
-package linda.server;
+package linda.multiserver;
 
-import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.UnknownHostException;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.Collection;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import linda.Callback;
 import linda.Linda;
 import linda.Tuple;
-import linda.Linda.eventMode;
-import linda.Linda.eventTiming;
 
 /** Client part of a client/server implementation of Linda.
  * It implements the Linda interface and propagates everything to the server it is connected to.
